@@ -25,19 +25,24 @@ export interface RegionDataBundle extends RegionDynamicData {
   };
 }
 
+/**
+ * ONE canonical data policy feeds ALL scoring surfaces (map, rankings,
+ * region pages, compare). GNSS scores only from already-cached station
+ * series (a background warmup fills the cache; fresh fetches stay out
+ * of the request path so every surface shows identical numbers). SST
+ * history for the local percentile is always attempted (cached 7 d).
+ */
 export async function getRegionDynamicData(
   profile: RegionProfile,
   config: ResearchConfig = CANONICAL_CONFIG,
   opts: {
-    includeGnss?: boolean;
     includeEnv?: boolean;
-    envHistory?: boolean;
     momentTensors?: boolean;
   } = {},
 ): Promise<RegionDataBundle> {
-  const includeGnss = opts.includeGnss ?? true;
   const includeEnv = opts.includeEnv ?? true;
 
+  void config; // reserved for future policy switches
   const [catalogRes, volcanoRes, ensoRes, remoteRes] = await Promise.all([
     getRegionCatalog(profile, config.thresholds.minMagnitude).catch(() => null),
     getVolcanoesNear(profile),
@@ -66,7 +71,7 @@ export async function getRegionDynamicData(
   let envMode: RegionDataBundle["modes"]["env"] = "missing";
   if (includeEnv) {
     const [sst, ssh] = await Promise.all([
-      getSstSample(profile, { history: opts.envHistory ?? true }).catch(() => null),
+      getSstSample(profile, { history: true }).catch(() => null),
       getSshSample(profile).catch(() => null),
     ]);
     if (sst || ssh) {
@@ -94,9 +99,7 @@ export async function getRegionDynamicData(
     }
   }
 
-  const gnss = includeGnss
-    ? await getRegionGnss(profile)
-    : await getRegionGnss(profile, { cachedOnly: true });
+  const gnss = await getRegionGnss(profile, { cachedOnly: true });
 
   const marginTrenches = getRegionProfiles()
     .filter((r) => r.margin === profile.margin)

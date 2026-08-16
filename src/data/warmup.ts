@@ -4,6 +4,7 @@ import { getPlateBoundaries } from "./adapters/usgs-plates";
 import { getVolcanoDb } from "./adapters/gvp-volcanoes";
 import { getEnso } from "./adapters/noaa-enso";
 import { getRegionDynamicData } from "./region-data";
+import { warmRegionGnssCache } from "./adapters/gnss";
 
 /**
  * Background warmup: primes the adapter caches so first visits are fast.
@@ -38,9 +39,7 @@ export async function warmBackground(): Promise<void> {
       if (!profile) break;
       try {
         await getRegionDynamicData(profile, undefined, {
-          includeGnss: false,
           includeEnv: true,
-          envHistory: false,
         });
       } catch {
         // ignore — will retry on next request
@@ -50,16 +49,10 @@ export async function warmBackground(): Promise<void> {
   };
   await Promise.all([worker(), worker()]);
 
-  // GNSS series are the heaviest payloads — warm last, one region at a time
+  // GNSS series are the heaviest payloads — warm last, one region at a
+  // time; this fills the caches the canonical scoring pass reads from
   for (const profile of ordered) {
-    try {
-      await getRegionDynamicData(profile, undefined, {
-        includeGnss: true,
-        includeEnv: false,
-      });
-    } catch {
-      // ignore
-    }
+    await warmRegionGnssCache(profile);
     await sleep(1000);
   }
 }

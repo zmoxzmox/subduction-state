@@ -189,6 +189,13 @@
       "title": "Filters",
       "minCoverage": "Minimum coverage",
       "any": "Any"
+    },
+    "ensoContext": "ENSO state (global context)",
+    "ensoSeason": "Season",
+    "ensoPhase": {
+      "el-nino": "El Niño",
+      "la-nina": "La Niña",
+      "neutral": "Neutral"
     }
   },
   "map": {

@@ -11,10 +11,9 @@ export async function GET(
   const { slug } = await params;
   const url = new URL(request.url);
   const asOf = url.searchParams.get("asOf") ?? undefined;
-  const noGnss = url.searchParams.get("noGnss") === "1";
 
   try {
-    const detail = await getRegionDetail(slug, { asOf, noGnss });
+    const detail = await getRegionDetail(slug, { asOf });
     if (!detail) {
       return NextResponse.json({ error: "unknown region" }, { status: 404 });
     }

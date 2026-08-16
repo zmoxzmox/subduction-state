@@ -24,6 +24,7 @@ import {
   rollingRate,
 } from "@/scoring/timeseries";
 import { getRegionDynamicData, type RegionDataBundle } from "./region-data";
+import { getRegionMomentTensors } from "./adapters/usgs-moment-tensors";
 import { getEnso } from "./adapters/noaa-enso";
 
 /**
@@ -72,6 +73,32 @@ export interface GlobalScores {
 let globalCache: { at: number; data: GlobalScores } | null = null;
 const GLOBAL_TTL = 10 * 60_000;
 
+/**
+ * Canonical per-region score cache — the SINGLE source of truth for the
+ * map regime layer, the home rankings, compare and the region page, so
+ * every surface shows byte-identical numbers for a region.
+ */
+const regionScoreCache = new Map<
+  string,
+  { at: number; now: number; entry: RegionScoreEntry; data: RegionDataBundle }
+>();
+const REGION_SCORE_TTL = 10 * 60_000;
+
+export async function getRegionScoreEntry(
+  profile: RegionProfile,
+): Promise<{ now: number; entry: RegionScoreEntry; data: RegionDataBundle }> {
+  const hit = regionScoreCache.get(profile.slug);
+  if (hit && Date.now() - hit.at < REGION_SCORE_TTL) return hit;
+  const data = await getRegionDynamicData(profile, CANONICAL_CONFIG, {
+    includeEnv: true,
+  });
+  const now = Date.now();
+  const entry = buildScoreEntry(profile, data, now);
+  const record = { at: now, now, entry, data };
+  regionScoreCache.set(profile.slug, record);
+  return record;
+}
+
 export async function getGlobalScores(
   opts: { wait?: boolean } = {},
 ): Promise<GlobalScores> {
@@ -83,20 +110,12 @@ export async function getGlobalScores(
   // regions resolve into this map as their (cached) data lands; the
   // deadline only bounds THIS response — late regions keep warming the
   // cache for the next poll
-  const settled = new Map<
-    string,
-    { profile: RegionProfile; data: RegionDynamicData & { modes: RegionDataBundle["modes"] } }
-  >();
+  const settled = new Map<string, RegionScoreEntry>();
   const work = (async () => {
     await Promise.allSettled(
       profiles.map(async (profile) => {
         try {
-          const data = await getRegionDynamicData(profile, CANONICAL_CONFIG, {
-            includeGnss: false,
-            includeEnv: true,
-            envHistory: false,
-          });
-          settled.set(profile.slug, { profile, data });
+          settled.set(profile.slug, (await getRegionScoreEntry(profile)).entry);
         } catch {
           // stays pending for this response
         }
@@ -113,12 +132,11 @@ export async function getGlobalScores(
     ]);
   }
 
-  const now = Date.now();
   const entries: RegionScoreEntry[] = [];
   const pending: string[] = [];
   for (const profile of profiles) {
     const hit = settled.get(profile.slug);
-    if (hit) entries.push(buildScoreEntry(profile, hit.data, now));
+    if (hit) entries.push(hit);
     else pending.push(profile.slug);
   }
 
@@ -215,7 +233,7 @@ const detailCache = new Map<string, { at: number; data: RegionDetail }>();
 
 export async function getRegionDetail(
   slug: string,
-  opts: { asOf?: string; noGnss?: boolean } = {},
+  opts: { asOf?: string } = {},
 ): Promise<RegionDetail | null> {
   const profile = getRegionProfiles().find((r) => r.slug === slug);
   if (!profile) return null;
@@ -223,28 +241,49 @@ export async function getRegionDetail(
   const asOfMs = opts.asOf ? Date.parse(opts.asOf) : NaN;
   const replay = Number.isFinite(asOfMs);
   const now = replay ? asOfMs : Date.now();
-  const cacheKey = replay ? `${slug}@${opts.asOf}` : `${slug}#gnss${opts.noGnss ? 0 : 1}`;
+  const cacheKey = replay ? `${slug}@${opts.asOf}` : slug;
   const cached = detailCache.get(cacheKey);
   if (cached && Date.now() - cached.at < 10 * 60_000) return cached.data;
 
-  const includeGnss = !replay && !opts.noGnss;
-  const data = await getRegionDynamicData(profile, CANONICAL_CONFIG, {
-    includeGnss,
-    includeEnv: !replay,
-    momentTensors: !replay,
-  });
+  let data: RegionDataBundle;
+  let entry: RegionScoreEntry;
 
-  // replay: truncate the catalog at asOf; env/gnss/volcano unknown
   if (replay) {
+    // partial historical replay: seismic-derived metrics only
+    data = await getRegionDynamicData(profile, CANONICAL_CONFIG, {
+      includeEnv: false,
+    });
     data.catalog = (data.catalog ?? []).filter((e) => e.time <= now);
     data.envSample = null;
     data.enso = null;
     data.volcanoes = null;
     data.gnssStations = null;
+    data.momentTensors = null;
     data.remoteEvents = data.remoteEvents.filter((e) => e.time <= now);
+    entry = buildScoreEntry(profile, data, now);
+  } else {
+    // canonical path: reuse the EXACT cached entry the map/rankings use
+    // so the region page score always matches the home table
+    let nowCanon: number;
+    ({ now: nowCanon, entry, data } = await getRegionScoreEntry(profile));
+    // moment tensors enrich evidence on the detail page only — they
+    // affect confidence, never the score, so numbers stay identical
+    // (recomputed with the SAME `now` the cached entry was built with)
+    const mt = data.catalog
+      ? await getRegionMomentTensors(profile, data.catalog).catch(() => null)
+      : null;
+    if (mt) {
+      data = { ...data, momentTensors: mt };
+      const { metrics, m5Count30d } = computeRegionMetrics(
+        profile,
+        data,
+        CANONICAL_CONFIG,
+        nowCanon,
+      );
+      const summary = aggregateScoredMetrics(metrics);
+      entry = { ...entry, metrics, summary, m5Count30d };
+    }
   }
-
-  const entry = buildScoreEntry(profile, data, now);
   const summaryClauses = buildSummaryClauses(entry.metrics);
 
   // change feed from asOf recomputations (cheap: local filters only)

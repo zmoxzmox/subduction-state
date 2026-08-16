@@ -136,6 +136,28 @@ export interface RegionGnss {
 
 const MAX_STATIONS = 5;
 
+/**
+ * Background warmer: fetch the nearest stations' series to populate the
+ * memory/disk caches so the canonical (cachedOnly) scoring pass picks
+ * them up on later requests. Never blocks or throws.
+ */
+export async function warmRegionGnssCache(profile: RegionProfile): Promise<void> {
+  try {
+    const index = await getStationIndex();
+    const nearby = index.data
+      .map((s) => ({
+        ...s,
+        d: distanceKm(s.lon, s.lat, profile.center[0], profile.center[1]),
+      }))
+      .filter((s) => s.d <= profile.radiusKm)
+      .sort((a, b) => a.d - b.d)
+      .slice(0, MAX_STATIONS);
+    await Promise.allSettled(nearby.map((s) => getStationSeries(s.id)));
+  } catch {
+    // warming is best-effort
+  }
+}
+
 export async function getRegionGnss(
   profile: RegionProfile,
   opts: { cachedOnly?: boolean } = {},

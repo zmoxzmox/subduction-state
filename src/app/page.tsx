@@ -13,6 +13,7 @@ import { WorldMap, type LayerToggles, type MapFilters } from "@/components/map/w
 import { MapFilterRow } from "@/components/map/map-controls";
 import {
   EnvAnomaliesPanel,
+  EnsoContextCard,
   HighestMatchesPanel,
   LargestQuakesPanel,
   LeadersPanel,
@@ -65,40 +66,50 @@ export default function HomePage() {
       </div>
 
       <div className="flex flex-col gap-4 lg:flex-row">
-        {/* map column */}
-        <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-[var(--shadow-card)]">
-          <MapFilterRow
-            filters={filters}
-            onChange={setFilters}
-            layers={layers}
-            onLayersChange={setLayers}
-            quakeMode={quakes.data?.mode ?? ""}
-          />
-          <div className="relative h-[52vh] min-h-[360px] lg:h-[calc(100vh-13rem)]">
-            {quakes.isPending ? (
-              <div className="flex h-full items-center justify-center">
-                <Skeleton className="h-full w-full rounded-none" />
-              </div>
-            ) : (
-              <WorldMap
-                filters={filters}
-                layers={layers}
-                regions={regions}
-                quakes={quakes.data?.events ?? []}
-                quakeMode={quakes.data?.mode ?? ""}
-                boundaries={plates.data?.boundaries ?? null}
-                faultsGeojson={plates.data?.faults?.geojson ?? null}
-                volcanoes={volcanoes.data?.volcanoes ?? null}
-                gnssStations={gnssStations}
-                selectedSlug={null}
-                onSelectRegion={(slug) => router.push(`/region/${slug}`)}
-              />
-            )}
+        {/* map column: filters + map, then the secondary panels fill the
+            space below the map instead of leaving a gap */}
+        <div className="flex min-w-0 flex-1 flex-col gap-3">
+          <div className="flex flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-[var(--shadow-card)]">
+            <MapFilterRow
+              filters={filters}
+              onChange={setFilters}
+              layers={layers}
+              onLayersChange={setLayers}
+              quakeMode={quakes.data?.mode ?? ""}
+            />
+            <div className="relative h-[52vh] min-h-[360px] lg:h-[calc(100vh-24rem)]">
+              {quakes.isPending ? (
+                <div className="flex h-full items-center justify-center">
+                  <Skeleton className="h-full w-full rounded-none" />
+                </div>
+              ) : (
+                <WorldMap
+                  filters={filters}
+                  layers={layers}
+                  regions={regions}
+                  quakes={quakes.data?.events ?? []}
+                  quakeMode={quakes.data?.mode ?? ""}
+                  boundaries={plates.data?.boundaries ?? null}
+                  faultsGeojson={plates.data?.faults?.geojson ?? null}
+                  volcanoes={volcanoes.data?.volcanoes ?? null}
+                  gnssStations={gnssStations}
+                  selectedSlug={null}
+                  onSelectRegion={(slug) => router.push(`/region/${slug}`)}
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <LeadersPanel regions={regions} kind="quiescence" />
+            <LeadersPanel regions={regions} kind="activation" />
+            <EnvAnomaliesPanel regions={regions} />
+            <LowestCoveragePanel regions={regions} />
           </div>
         </div>
 
         {/* dashboard column */}
-        <div className="thin-scroll flex w-full flex-col gap-3 lg:w-[430px] lg:shrink-0">
+        <div className="thin-scroll flex w-full flex-col gap-3 lg:w-[400px] lg:shrink-0">
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-medium uppercase tracking-wider text-ink-3">
               {t("home.rankingFilters.minCoverage")}
@@ -123,12 +134,7 @@ export default function HomePage() {
             events7d={scored.data?.largest7d ?? []}
             events30d={scored.data?.largest30d ?? []}
           />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-            <LeadersPanel regions={regions} kind="quiescence" />
-            <LeadersPanel regions={regions} kind="activation" />
-          </div>
-          <EnvAnomaliesPanel regions={regions} />
-          <LowestCoveragePanel regions={regions} />
+          <EnsoContextCard enso={scored.data?.enso ?? null} />
         </div>
       </div>
     </div>

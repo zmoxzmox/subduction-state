@@ -6,7 +6,7 @@ import type { RegionScoreEntry } from "@/data/scores";
 import type { QuakeEvent } from "@/types";
 import { useI18n } from "@/i18n/provider";
 import { useResearchConfig } from "@/research/config-context";
-import type { ScoreSummary } from "@/types";
+import type { EnsoState, ScoreSummary } from "@/types";
 import { Card, CardBody, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Segmented } from "@/components/ui/segmented";
 import { ScoreChip } from "./score";
@@ -289,6 +289,40 @@ export function EnvAnomaliesPanel({ regions }: { regions: RegionScoreEntry[] }) 
             <li className="px-4 py-5 text-xs text-ink-3">{t("common.loading")}</li>
           )}
         </ul>
+      </CardBody>
+    </Card>
+  );
+}
+
+export function EnsoContextCard({ enso }: { enso: EnsoState | null }) {
+  const { t, formatNumber } = useI18n();
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{t("home.ensoContext")}</CardTitle>
+      </CardHeader>
+      <CardBody>
+        {enso?.oni != null ? (
+          <>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-semibold text-ink tnum">
+                {enso.oni > 0 ? "+" : ""}
+                {formatNumber(enso.oni, { maximumFractionDigits: 2 })}°C
+              </span>
+              <span className="text-xs text-ink-2">
+                {t(`home.ensoPhase.${enso.phase}`)}
+              </span>
+            </div>
+            <p className="mt-1 text-[11px] text-ink-3 tnum">
+              ONI · {t("home.ensoSeason")}: {enso.season ?? "—"}
+            </p>
+          </>
+        ) : (
+          <p className="text-xs text-ink-3">{t("common.unavailable")}</p>
+        )}
+        <p className="mt-2 text-[10px] leading-snug text-ink-3">
+          {t("region.charts.ensoNote")}
+        </p>
       </CardBody>
     </Card>
   );

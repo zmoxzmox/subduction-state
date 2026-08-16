@@ -130,3 +130,22 @@ test.describe("Subduction State — smoke", () => {
     ).toHaveCount(0);
   });
 });
+
+test("11. home ranking matches the region page score", async ({ page }) => {
+  await page.goto("/");
+  // first data row of the Highest-matches table
+  const table = page.getByRole("table").first();
+  await expect(table.getByRole("row").nth(1)).toBeVisible({ timeout: 120_000 });
+  const firstRow = table.getByRole("row").nth(1);
+  const regionHref = await firstRow.getByRole("link").first().getAttribute("href");
+  const homeScore = (await firstRow.locator("span.tnum").first().textContent())?.trim();
+  expect(regionHref).toMatch(/^\/region\//);
+  expect(homeScore).toMatch(/^\d+$/);
+
+  // the region page hero must show the SAME observed number
+  await page.goto(regionHref!);
+  const hero = page.locator('[aria-label*="regime match" i]').first();
+  await expect(hero).toBeVisible({ timeout: 120_000 });
+  const regionScore = (await hero.textContent())?.trim();
+  expect(regionScore).toBe(homeScore);
+});
