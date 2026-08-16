@@ -209,7 +209,12 @@
     "depthShallow": "Shallow < 50 km",
     "depthIntermediate": "Intermediate 50–150 km",
     "depthDeep": "Deep > 150 km",
-    "window": { "24h": "24 h", "7d": "7 d", "30d": "30 d", "90d": "90 d" },
+    "window": {
+      "24h": "24 h",
+      "7d": "7 d",
+      "30d": "30 d",
+      "90d": "90 d"
+    },
     "layer": {
       "earthquakes": "Earthquakes (USGS)",
       "plates": "Tectonic boundaries (USGS)",
@@ -221,7 +226,6 @@
     "legend": {
       "title": "Legend",
       "magScale": "Magnitude",
-      "depthScale": "Depth",
       "regimeScale": "Regime match",
       "coverageHatch": "Hatched = low data coverage / no score",
       "cluster": "Clustered at low zoom",
@@ -252,7 +256,7 @@
       "openRegion": "Open region analysis"
     },
     "noEvents": "No earthquakes match the current filters.",
-    "depthNote": "Depth color: shallow → deep",
+    "depthNote": "Depth shown per event in its details.",
     "fixturesActive": "Cached demo snapshot — upstream unavailable",
     "regimeNoScore": "No score (insufficient data)"
   },

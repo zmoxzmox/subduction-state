@@ -117,7 +117,7 @@ export function WorldMap(props: MapProps) {
         return p;
       });
     });
-    for (const layer of ["quakes-circle", "volcanoes-circle", "gnss-circle", "regions-fill", "quakes-clusters"]) {
+    for (const layer of ["quakes-symbol", "volcanoes-circle", "gnss-circle", "regions-fill", "quakes-clusters"]) {
       map.on("mouseenter", layer, () => (map.getCanvas().style.cursor = "pointer"));
       map.on("mouseleave", layer, () => (map.getCanvas().style.cursor = ""));
     }
@@ -208,6 +208,55 @@ function addHatchPattern(map: MlMap) {
   ctx.lineTo(8, -2);
   ctx.stroke();
   map.addImage("hatch", ctx.getImageData(0, 0, size, size), { pixelRatio: 2 });
+}
+
+/**
+ * Earthquake marker: light-blue triangle. Filled = independent event;
+ * hollow/ringed = aftershock candidate (ETAS-lite). Magnitude maps to
+ * icon size, age to opacity — same channels as before, new shape.
+ */
+function addQuakeIcons(map: MlMap, mode: "light" | "dark") {
+  const fill = mode === "dark" ? "#86b6ef" : "#6da7ec";
+  const edge = mode === "dark" ? "rgba(14,18,23,0.85)" : "rgba(251,251,250,0.9)";
+  const make = (ring: boolean) => {
+    const s = 44;
+    const canvas = document.createElement("canvas");
+    canvas.width = s;
+    canvas.height = s;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.translate(s / 2, s / 2 + 2);
+    const r = 14;
+    ctx.beginPath();
+    for (let i = 0; i < 3; i++) {
+      const a = -Math.PI / 2 + (i * 2 * Math.PI) / 3;
+      const x = r * Math.cos(a);
+      const y = r * Math.sin(a);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    if (ring) {
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = fill;
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = edge;
+      ctx.stroke();
+    }
+    return ctx.getImageData(0, 0, s, s);
+  };
+  for (const [name, ring] of [
+    ["quake-tri", false],
+    ["quake-tri-ring", true],
+  ] as const) {
+    if (map.hasImage(name)) map.removeImage(name);
+    const img = make(ring);
+    if (img) map.addImage(name, img, { pixelRatio: 2 });
+  }
 }
 
 function firstSymbolId(map: MlMap): string | undefined {
@@ -480,10 +529,6 @@ function syncAllLayers(
     };
   }
 
-  const depthStops = [0, 25, 70, 150, 300, 500, 700].map(
-    (v) => [v, viz.depthColor(v)] as [number, string],
-  );
-
   ensureLayer(
     map,
     {
@@ -520,33 +565,38 @@ function syncAllLayers(
     },
     before,
   );
+  addQuakeIcons(map, mode);
   ensureLayer(
     map,
     {
-      id: "quakes-circle",
-      type: "circle",
+      id: "quakes-symbol",
+      type: "symbol",
       source: "quakes",
       filter: ["!", ["has", "point_count"]],
-      paint: {
-        "circle-radius": [
+      layout: {
+        "icon-image": [
+          "case",
+          ["==", ["get", "aftershock"], 1],
+          "quake-tri-ring",
+          "quake-tri",
+        ],
+        "icon-size": [
           "interpolate",
           ["linear"],
           ["get", "mag"],
-          2, 2.2,
-          4, 4,
-          5, 6,
-          6, 9,
-          7, 13,
-          8, 19,
-          9, 26,
+          2, 0.3,
+          4, 0.45,
+          5, 0.55,
+          6, 0.7,
+          7, 0.9,
+          8, 1.15,
+          9, 1.4,
         ],
-        "circle-color": [
-          "interpolate",
-          ["linear"],
-          ["get", "depthKm"],
-          ...depthStops.flat(),
-        ],
-        "circle-opacity": [
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+      },
+      paint: {
+        "icon-opacity": [
           "interpolate",
           ["linear"],
           ["get", "ageDays"],
@@ -554,9 +604,6 @@ function syncAllLayers(
           14, 0.85,
           90, 0.6,
         ],
-        "circle-stroke-color": mode === "dark" ? "#0e1217" : "#fbfbfa",
-        "circle-stroke-width": ["case", ["get", "aftershock"], 1.6, 0.6],
-        "circle-stroke-opacity": 0.9,
       },
     },
     before,
@@ -653,7 +700,7 @@ function syncAllLayers(
 function applyVisibility(map: MlMap, layers: LayerToggles) {
   const vis = (v: boolean): VisibilitySpecification => (v ? "visible" : "none");
   for (const [id, on] of [
-    ["quakes-circle", layers.earthquakes],
+    ["quakes-symbol", layers.earthquakes],
     ["quakes-clusters", layers.earthquakes],
     ["quakes-cluster-count", layers.earthquakes],
     ["plates-convergent", layers.plates],
@@ -683,7 +730,7 @@ function handleMapClick(
   const pick = (layer: string) =>
     map.queryRenderedFeatures(point, { layers: [layer] })[0];
 
-  const quake = pick("quakes-circle");
+  const quake = pick("quakes-symbol");
   if (quake) {
     const q = JSON.parse(quake.properties!.quake) as QuakeEvent;
     setPopover({ kind: "quake", lngLat: e.lngLat, quake: q });

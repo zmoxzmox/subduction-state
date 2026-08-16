@@ -83,20 +83,35 @@ const regionScoreCache = new Map<
   { at: number; now: number; entry: RegionScoreEntry; data: RegionDataBundle }
 >();
 const REGION_SCORE_TTL = 10 * 60_000;
+/** concurrent callers share one in-flight computation per region */
+const inFlight = new Map<
+  string,
+  Promise<{ now: number; entry: RegionScoreEntry; data: RegionDataBundle }>
+>();
 
 export async function getRegionScoreEntry(
   profile: RegionProfile,
 ): Promise<{ now: number; entry: RegionScoreEntry; data: RegionDataBundle }> {
   const hit = regionScoreCache.get(profile.slug);
   if (hit && Date.now() - hit.at < REGION_SCORE_TTL) return hit;
-  const data = await getRegionDynamicData(profile, CANONICAL_CONFIG, {
-    includeEnv: true,
-  });
-  const now = Date.now();
-  const entry = buildScoreEntry(profile, data, now);
-  const record = { at: now, now, entry, data };
-  regionScoreCache.set(profile.slug, record);
-  return record;
+  const pending = inFlight.get(profile.slug);
+  if (pending) return pending;
+  const work = (async () => {
+    try {
+      const data = await getRegionDynamicData(profile, CANONICAL_CONFIG, {
+        includeEnv: true,
+      });
+      const now = Date.now();
+      const entry = buildScoreEntry(profile, data, now);
+      const record = { at: now, now, entry, data };
+      regionScoreCache.set(profile.slug, record);
+      return record;
+    } finally {
+      inFlight.delete(profile.slug);
+    }
+  })();
+  inFlight.set(profile.slug, work);
+  return work;
 }
 
 export async function getGlobalScores(

@@ -209,7 +209,12 @@
     "depthShallow": "Somera < 50 km",
     "depthIntermediate": "Intermedia 50–150 km",
     "depthDeep": "Profunda > 150 km",
-    "window": { "24h": "24 h", "7d": "7 d", "30d": "30 d", "90d": "90 d" },
+    "window": {
+      "24h": "24 h",
+      "7d": "7 d",
+      "30d": "30 d",
+      "90d": "90 d"
+    },
     "layer": {
       "earthquakes": "Terremotos (USGS)",
       "plates": "Límites tectónicos (USGS)",
@@ -221,7 +226,6 @@
     "legend": {
       "title": "Leyenda",
       "magScale": "Magnitud",
-      "depthScale": "Profundidad",
       "regimeScale": "Coincidencia con el régimen",
       "coverageHatch": "Trama = baja cobertura de datos / sin puntaje",
       "cluster": "Agrupados con poco zoom",
@@ -252,7 +256,7 @@
       "openRegion": "Abrir análisis de la región"
     },
     "noEvents": "Ningún terremoto coincide con los filtros actuales.",
-    "depthNote": "Color de profundidad: somera → profunda",
+    "depthNote": "La profundidad se muestra por evento en sus detalles.",
     "fixturesActive": "Instantánea de demostración en caché — servicio no disponible",
     "regimeNoScore": "Sin puntaje (datos insuficientes)"
   },

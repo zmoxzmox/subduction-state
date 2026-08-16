@@ -152,25 +152,23 @@ function MapLegend() {
         </div>
         <div>
           <div className="mb-1 font-semibold text-ink">{t("map.legend.magScale")}</div>
-          <div className="flex items-end gap-1.5">
-            {[3, 5, 6.5, 8].map((m) => (
-              <span
-                key={m}
-                className="inline-block rounded-full bg-[var(--viz-1)]"
-                style={{ width: 4 + m * 2.4, height: 4 + m * 2.4, opacity: 0.75 }}
-              />
+          <div className="flex items-end gap-2">
+            {[4, 6, 8].map((m) => (
+              <span key={m} className="flex flex-col items-center gap-0.5">
+                <svg viewBox="0 0 20 20" style={{ width: 6 + m * 2.2, height: 6 + m * 2.2 }} aria-hidden>
+                  <polygon points="10,2 18.5,17 1.5,17" fill="var(--viz-1)" />
+                </svg>
+                <span className="text-[9px] text-ink-3 tnum">M{m}</span>
+              </span>
             ))}
+            <span className="flex flex-col items-center gap-0.5">
+              <svg viewBox="0 0 20 20" style={{ width: 14, height: 14 }} aria-hidden>
+                <polygon points="10,2 18.5,17 1.5,17" fill="none" stroke="var(--viz-1)" strokeWidth="2.5" />
+              </svg>
+              <span className="text-[9px] text-ink-3">◎</span>
+            </span>
           </div>
-          <p className="mt-1 text-[10px] text-ink-3">{t("map.depthNote")} · {t("map.legend.aftershock")}</p>
-        </div>
-        <div>
-          <div className="mb-1 font-semibold text-ink">{t("map.legend.depthScale")}</div>
-          <div className="flex h-2 overflow-hidden rounded">
-            <div className="flex-1" style={{ background: "var(--viz-2)", opacity: 0.25 }} />
-            <div className="flex-1" style={{ background: "var(--viz-2)", opacity: 0.55 }} />
-            <div className="flex-1" style={{ background: "var(--viz-2)", opacity: 1 }} />
-          </div>
-          <p className="mt-1 text-[10px] text-ink-3">&lt;50 km · 50–150 · &gt;150</p>
+          <p className="mt-1 text-[10px] text-ink-3">{t("map.legend.aftershock")} · {t("map.depthNote")}</p>
         </div>
         <div>
           <div className="mb-1 font-semibold text-ink">{t("map.legend.title")}</div>

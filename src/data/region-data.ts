@@ -29,8 +29,11 @@ export interface RegionDataBundle extends RegionDynamicData {
  * ONE canonical data policy feeds ALL scoring surfaces (map, rankings,
  * region pages, compare). GNSS scores only from already-cached station
  * series (a background warmup fills the cache; fresh fetches stay out
- * of the request path so every surface shows identical numbers). SST
- * history for the local percentile is always attempted (cached 7 d).
+ * of the request path so every surface shows identical numbers). The
+ * SST seasonal-history query is deliberately OFF the canonical path —
+ * it is slow and blew the cold-start/lambda budget — so env scoring
+ * uses the documented absolute-anomaly anchors everywhere (identical
+ * numbers on every surface, fast cold starts).
  */
 export async function getRegionDynamicData(
   profile: RegionProfile,
@@ -71,7 +74,7 @@ export async function getRegionDynamicData(
   let envMode: RegionDataBundle["modes"]["env"] = "missing";
   if (includeEnv) {
     const [sst, ssh] = await Promise.all([
-      getSstSample(profile, { history: true }).catch(() => null),
+      getSstSample(profile, { history: false }).catch(() => null),
       getSshSample(profile).catch(() => null),
     ]);
     if (sst || ssh) {
