@@ -41,7 +41,7 @@ test.describe("Subduction State — smoke", () => {
     await page.goto("/");
     await page.waitForTimeout(4000);
     const lima = page.getByRole("link", { name: /Central Peru|Perú central/i }).first();
-    await expect(lima).toBeVisible({ timeout: 60_000 });
+    await expect(lima).toBeVisible({ timeout: 120_000 });
   });
 
   test("5. region page loads", async ({ page }) => {

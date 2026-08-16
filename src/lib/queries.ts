@@ -56,7 +56,7 @@ export function useScoredRegions() {
     queryFn: () => json<ScoredRegionsPayload>("/api/scored-regions"),
     staleTime: 5 * 60_000,
     refetchInterval: (query) =>
-      query.state.data?.complete ? 10 * 60_000 : 30_000,
+      query.state.data?.complete ? 10 * 60_000 : 15_000,
   });
 }
 

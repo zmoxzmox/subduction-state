@@ -8,7 +8,6 @@ import {
   type StyleSpecification,
   type LngLat,
   type MapMouseEvent,
-  type FilterSpecification,
   type SourceSpecification,
   type LayerSpecification,
   type VisibilitySpecification,
@@ -123,6 +122,10 @@ export function WorldMap(props: MapProps) {
       map.on("mouseleave", layer, () => (map.getCanvas().style.cursor = ""));
     }
     mapRef.current = map;
+    // minimal test hook (also used by e2e specs) — not used by app code
+    if (typeof window !== "undefined") {
+      (window as unknown as { __map?: MlMap }).__map = map;
+    }
     return () => {
       map.remove();
       mapRef.current = null;
@@ -144,32 +147,16 @@ export function WorldMap(props: MapProps) {
   }, [mode, ready]);
 
   /* -------------------------- data sync ---------------------------- */
+  // filters are applied to the DATA (not as layer filters) so that
+  // clusters always reflect exactly the visible event set; the sync
+  // therefore also runs whenever filters or research weights change
   React.useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
     registerRegionsForClick(props.regions);
     syncAllLayers(map, props, mode, lang, aggregate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, props.quakes, props.regions, props.boundaries, props.faultsGeojson, props.volcanoes, props.gnssStations, props.selectedSlug, props.layers, lang, mode]);
-
-  /* ------------------------- quake filters -------------------------- */
-  React.useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !ready) return;
-    const { filters, layers } = props;
-    const magFilter: FilterSpecification = [">=", ["get", "mag"], filters.minMag];
-    let depthFilter: FilterSpecification = ["any", true];
-    if (filters.depth === "shallow") depthFilter = ["<", ["get", "depthKm"], 50];
-    else if (filters.depth === "intermediate")
-      depthFilter = ["all", [">=", ["get", "depthKm"], 50], ["<=", ["get", "depthKm"], 150]];
-    else if (filters.depth === "deep") depthFilter = [">", ["get", "depthKm"], 150];
-    const combined: FilterSpecification = ["all", magFilter, depthFilter];
-    for (const layer of ["quakes-circle", "quakes-clusters", "quakes-cluster-count"]) {
-      if (map.getLayer(layer)) map.setFilter(layer, combined);
-    }
-    applyVisibility(map, layers);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, props.filters, props.layers]);
+  }, [ready, props.quakes, props.regions, props.boundaries, props.faultsGeojson, props.volcanoes, props.gnssStations, props.selectedSlug, props.layers, props.filters, lang, mode, aggregate]);
 
   /* ------------------------- popover ------------------------------- */
   React.useEffect(() => {
@@ -228,8 +215,24 @@ function firstSymbolId(map: MlMap): string | undefined {
   return layers?.find((l) => l.type === "symbol" && l.id?.startsWith("label-"))?.id;
 }
 
+/**
+ * Create the source on first run, and — critically — push fresh data
+ * into it on every subsequent run. Without the setData branch, later
+ * data (window switches, late-loading scores/volcanoes, language
+ * changes) would never reach an already-created source and the map
+ * would silently keep showing stale geometry.
+ */
 function ensureSource(map: MlMap, id: string, source: SourceSpecification) {
-  if (!map.getSource(id)) map.addSource(id, source);
+  const existing = map.getSource(id);
+  if (!existing) {
+    map.addSource(id, source);
+    return;
+  }
+  if (source.type === "geojson" && existing.type === "geojson") {
+    (existing as GeoJSONSource).setData(
+      source.data as GeoJSON.FeatureCollection,
+    );
+  }
 }
 
 function ensureLayer(
@@ -424,11 +427,22 @@ function syncAllLayers(
   }
 
   /* ---- earthquakes (clustered) ---- */
+  // magnitude/depth filters are applied to the feature set itself so
+  // cluster counts always match exactly what is displayed
+  const visibleQuakes = props.quakes.filter((q) => {
+    if (q.mag < props.filters.minMag) return false;
+    const depth = props.filters.depth;
+    if (depth === "shallow") return q.depthKm < 50;
+    if (depth === "intermediate")
+      return q.depthKm >= 50 && q.depthKm <= 150;
+    if (depth === "deep") return q.depthKm > 150;
+    return true;
+  });
   ensureSource(map, "quakes", {
     type: "geojson",
     data: {
       type: "FeatureCollection",
-      features: props.quakes.map((q) => ({
+      features: visibleQuakes.map((q) => ({
         type: "Feature",
         id: q.id,
         properties: {
@@ -448,6 +462,23 @@ function syncAllLayers(
       maxMag: ["max", ["get", "mag"]],
     },
   });
+
+  // test hook: the exact data pushed into the sources on this sync
+  if (typeof window !== "undefined") {
+    (window as unknown as {
+      __mapDebug?: {
+        quakeCount: number;
+        window: string;
+        regionCount: number;
+        volcanoCount: number;
+      };
+    }).__mapDebug = {
+      quakeCount: visibleQuakes.length,
+      window: props.filters.window,
+      regionCount: props.regions.length,
+      volcanoCount: props.volcanoes?.length ?? 0,
+    };
+  }
 
   const depthStops = [0, 25, 70, 150, 300, 500, 700].map(
     (v) => [v, viz.depthColor(v)] as [number, string],
