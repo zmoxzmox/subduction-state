@@ -46,5 +46,43 @@
   "context": {
     "en": "2011 Tōhoku M9.1 rupture; earlier Sanriku tsunami earthquakes 1896/1933; deep coupling debate.",
     "es": "Ruptura de Tōhoku de 2011 (M9.1); terremotos de tsunami de Sanriku de 1896/1933; debate sobre el acoplamiento profundo."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.45,
+    "range": [
+      0.3,
+      0.7
+    ],
+    "sourceName": "Post-2011 coupling of the Japan Trench: recurring slip events and partial re-locking (Uchida & Matsuzawa 2013; Johnson et al. 2016)",
+    "sourceDate": "2016-01-01",
+    "confidence": 0.55,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 869,
+      "mag": 8.3,
+      "fullSegment": true,
+      "label": "Jogan (historic reconstruction, magnitude uncertain)"
+    },
+    {
+      "year": 1896,
+      "mag": 8.5,
+      "label": "Sanriku tsunami earthquake, partial"
+    },
+    {
+      "year": 1933,
+      "mag": 8.4,
+      "label": "Sanriku outer-rise (normal faulting), not interface"
+    },
+    {
+      "year": 2011,
+      "mag": 9.1,
+      "fullSegment": true,
+      "label": "Tōhoku-oki"
+    }
+  ]
 }

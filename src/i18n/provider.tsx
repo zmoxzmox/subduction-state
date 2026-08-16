@@ -59,18 +59,24 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       setLang,
       t: (path, params) => translate(lang, path, params),
       locale,
-      formatDate: (v, opts) =>
-        new Intl.DateTimeFormat(locale, {
+      formatDate: (v, opts) => {
+        const d = new Date(v);
+        if (Number.isNaN(d.getTime())) return "—";
+        return new Intl.DateTimeFormat(locale, {
           year: "numeric",
           month: "short",
           day: "numeric",
           ...opts,
-        }).format(new Date(v)),
-      formatTime: (v) =>
-        new Intl.DateTimeFormat(locale, {
+        }).format(d);
+      },
+      formatTime: (v) => {
+        const d = new Date(v);
+        if (Number.isNaN(d.getTime())) return "—";
+        return new Intl.DateTimeFormat(locale, {
           dateStyle: "medium",
           timeStyle: "short",
-        }).format(new Date(v)),
+        }).format(d);
+      },
       formatNumber: (v, opts) =>
         v == null || Number.isNaN(v)
           ? "—"

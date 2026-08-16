@@ -10,28 +10,60 @@ describe("region profiles", () => {
     expect(getRegionProfiles().length).toBe(20);
   });
 
-  it("ships Central Peru / Lima as the featured fully-configured profile", () => {
+  it("ships Central Peru / Lima as the featured reference profile", () => {
     const lima = getFeaturedRegion();
     expect(lima.slug).toBe("central-peru-lima");
-    expect(lima.curated?.couplingAsperity?.score).toBe(95);
-    expect(lima.curated?.slipDeficitMaturity?.score).toBe(85);
-    expect(lima.curated?.longTermQuiescence?.score).toBe(90);
-    // every curated value carries provenance
-    for (const m of Object.values(lima.curated!)) {
-      expect(m.sourceName.length).toBeGreaterThan(5);
-      expect(m.sourceDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect(m.confidence).toBeGreaterThan(0);
-      expect(m.lastReviewedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect(m.methodology.en.length).toBeGreaterThan(20);
-      expect(m.methodology.es.length).toBeGreaterThan(20);
-    }
     expect(lima.couplingPolygon?.length).toBeGreaterThanOrEqual(4);
+    expect(lima.couplingPrior?.value).toBe(0.9);
+    expect(lima.couplingPrior?.confidence).toBeGreaterThan(0.5);
   });
 
-  it("no other region invents curated structural scores", () => {
+  it("every region carries a sourced coupling prior (research-based, cited)", () => {
     for (const r of getRegionProfiles()) {
-      if (r.slug === "central-peru-lima") continue;
-      expect(r.curated, `${r.slug} must not invent curated scores`).toBeUndefined();
+      const prior = r.couplingPrior;
+      expect(prior, `${r.slug} must have a coupling prior`).toBeDefined();
+      expect(prior!.sourceName.length, `${r.slug} source`).toBeGreaterThan(15);
+      expect(prior!.sourceDate).toMatch(/^\d{4}(-\d{2}-\d{2})?$/);
+      expect(prior!.confidence).toBeGreaterThan(0);
+      expect(prior!.confidence).toBeLessThanOrEqual(1);
+      expect(prior!.value).toBeGreaterThanOrEqual(0);
+      expect(prior!.value).toBeLessThanOrEqual(1);
+      // weakly-coupled margins get honest low values, not invented highs
+      if (prior!.confidence < 0.4) {
+        expect(prior!.note?.en, `${r.slug} low-confidence note`).toBeTruthy();
+      }
+    }
+  });
+
+  it("every region carries its public great-rupture history (or explicitly none)", () => {
+    for (const r of getRegionProfiles()) {
+      expect(Array.isArray(r.greatRuptures), `${r.slug} ruptures array`).toBe(true);
+      for (const rup of r.greatRuptures ?? []) {
+        // includes real historic catalog entries (e.g., 869 Jogan, 1700 Cascadia)
+        expect(rup.year).toBeGreaterThan(500);
+        expect(rup.year).toBeLessThanOrEqual(new Date().getUTCFullYear());
+        expect(rup.mag).toBeGreaterThanOrEqual(6.5);
+      }
+      // regions claiming a long gap must have a full-segment event
+      const hasFull = (r.greatRuptures ?? []).some((x) => x.fullSegment);
+      if (!hasFull) expect(r.greatRuptures!.length).toBeLessThanOrEqual(3);
+    }
+  });
+
+  it("published recurrence estimates cite their source", () => {
+    for (const r of getRegionProfiles()) {
+      if (r.recurrence) {
+        expect(r.recurrence.years).toBeGreaterThan(20);
+        expect(r.recurrence.source.length).toBeGreaterThan(10);
+      }
+    }
+  });
+
+  it("no region invents per-metric curated SCORES anymore (structural values are derived)", () => {
+    // coupling is a prior; slip deficit and long-term gap are COMPUTED
+    // from ruptures + convergence + coupling — never hand-set scores
+    for (const r of getRegionProfiles()) {
+      expect((r as unknown as { curated?: unknown }).curated, r.slug).toBeUndefined();
     }
   });
 

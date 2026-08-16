@@ -395,7 +395,8 @@
     "intro": "Subduction State measures how strongly the currently observed conditions of a subduction segment resemble a hypothesised regime: high structural loading, accumulated deformation, relative seismic quiet, and possible external perturbation. It is a similarity metric over observable data. It is not, and cannot be, an earthquake forecast.",
     "what": {
       "title": "What the score measures",
-      "body": "The Loaded–Quiet Megathrust Regime Score aggregates ten weighted variables (below). Each variable is scored 0–100 from live, derived, curated or experimental evidence, or is null when unknown. The primary number you see is the observed-data score: known contributions renormalised over the known weight. Alongside it you always see data coverage and the full possible-score interval, because unknown ≠ normal."
+      "body": "The Loaded–Quiet Megathrust Regime Score aggregates ten weighted variables (below). Each variable is scored 0–100 from live, derived, curated or experimental evidence, or is null when unknown. The primary number you see is the observed-data score: known contributions renormalised over the known weight. Alongside it you always see data coverage and the full possible-score interval, because unknown ≠ normal.",
+      "structural": "Structural variables exist for every region: coupling is a cited literature prior per segment; slip deficit and long-term gap are computed from the public great-rupture record (USGS/NEIC, NOAA), the MORVEL convergence rate and that prior. Partial ruptures do not reset the full-segment deficit; regions with no recorded segment-scale great rupture honestly show unknown."
     },
     "not": {
       "title": "What it does NOT measure",

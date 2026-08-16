@@ -46,5 +46,20 @@
   "context": {
     "en": "1976 Moro Gulf M8.0 tsunami earthquake; highly complex block boundaries — segmentation poorly resolved.",
     "es": "Terremoto de tsunami del Golfo de Moro de 1976 (M8.0); límites de bloques muy complejos — la segmentación está mal resuelta."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.45,
+    "range": [
+      0.3,
+      0.6
+    ],
+    "sourceName": "Sparse geodetic coupling studies of the Philippine Mobile Belt margins (e.g., Hsu et al. 2012 and successors); segmentation poorly resolved",
+    "sourceDate": "2016-01-01",
+    "confidence": 0.35,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": []
 }

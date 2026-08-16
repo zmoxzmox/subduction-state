@@ -131,7 +131,11 @@ export function computeActivation(input: ActivationInput): ActivationResult {
     };
   }
 
-  const percentile = (1 - poissonCdf(recentCount - 1, expectedCount)) * 100;
+  // percentile of the observed count within its own Poisson
+  // distribution: P(X ≤ k). A QUIET corridor (k far below λ) lands at a
+  // low percentile → low activation; an unusually busy one → high.
+  // (The upper tail 1 − CDF(k−1) would invert this.)
+  const percentile = poissonCdf(recentCount, expectedCount) * 100;
 
   let confidence = 0.55;
   if (baselineDays >= 3 * 365) confidence += 0.2;

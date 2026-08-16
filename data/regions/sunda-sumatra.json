@@ -46,5 +46,51 @@
   "context": {
     "en": "2004 Aceh M9.1 and 2005 Nias M8.6 ruptures; strongly oblique convergence with forearc partitioning.",
     "es": "Rupturas de Aceh 2004 (M9.1) y Nias 2005 (M8.6); convergencia fuertemente oblícua con partición del antearco."
+  },
+  "couplingPrior": {
+    "value": 0.6,
+    "range": [
+      0.4,
+      0.8
+    ],
+    "sourceName": "Locked Mentawai asperities: Chlieh et al. (2008), JGR — heterogeneous coupling of the Sumatran megathrust; post-2005/2007 re-locking documented by the Sumatran GPS Array",
+    "sourceDate": "2008-01-01",
+    "confidence": 0.55,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1797,
+      "mag": 8.8,
+      "label": "Mentawai, partial"
+    },
+    {
+      "year": 1833,
+      "mag": 8.8,
+      "label": "Mentawai south, partial"
+    },
+    {
+      "year": 1861,
+      "mag": 8.5,
+      "label": "partial"
+    },
+    {
+      "year": 2004,
+      "mag": 9.1,
+      "fullSegment": true,
+      "label": "Aceh–Andaman — released the northern segment"
+    },
+    {
+      "year": 2005,
+      "mag": 8.6,
+      "label": "Nias, partial"
+    }
+  ],
+  "recurrence": {
+    "years": 200,
+    "source": "Sieh et al. — Mentawai earthquake supercycle (~200 a cluster recurrence)"
   }
 }

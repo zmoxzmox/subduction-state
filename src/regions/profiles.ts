@@ -11,17 +11,23 @@ import { circleRing } from "@/lib/geo";
  * dynamic and computed from live data.
  */
 
-const curatedMetricSchema = z.object({
-  score: z.number().min(0).max(100),
-  rawValue: z.union([z.string(), z.number()]).nullable(),
-  unit: z.string().optional(),
-  methodology: z.object({ en: z.string(), es: z.string() }),
+const couplingPriorSchema = z.object({
+  value: z.number().min(0).max(1),
+  range: z.tuple([z.number(), z.number()]).optional(),
   sourceName: z.string(),
   sourceUrl: z.string().optional(),
   sourceDate: z.string(),
   confidence: z.number().min(0).max(1),
-  lastReviewedAt: z.string(),
-  caveats: z.object({ en: z.string().optional(), es: z.string().optional() }).optional(),
+  note: z
+    .object({ en: z.string().optional(), es: z.string().optional() })
+    .optional(),
+});
+
+const greatRuptureSchema = z.object({
+  year: z.number().int(),
+  mag: z.number().min(4).max(10),
+  fullSegment: z.boolean().optional(),
+  label: z.string().optional(),
 });
 
 const regionFileSchema = z.object({
@@ -42,11 +48,15 @@ const regionFileSchema = z.object({
     })
     .nullable()
     .optional(),
+  couplingPrior: couplingPriorSchema.optional(),
+  greatRuptures: z.array(greatRuptureSchema).optional(),
+  recurrence: z
+    .object({ years: z.number().positive(), source: z.string() })
+    .optional(),
   envSamplePoint: z.tuple([z.number(), z.number()]),
   featured: z.boolean().optional(),
   context: z.object({ en: z.string(), es: z.string() }).optional(),
   couplingPolygon: z.array(z.tuple([z.number(), z.number()])).optional(),
-  curated: z.record(z.string(), curatedMetricSchema).optional(),
 });
 
 function loadProfiles(): RegionProfile[] {
@@ -63,13 +73,6 @@ function loadProfiles(): RegionProfile[] {
     );
     const lons = polygon.map((p) => p[0]);
     const lats = polygon.map((p) => p[1]);
-    const curated = parsed.curated
-      ? (Object.fromEntries(
-          Object.entries(parsed.curated).filter(([id]) =>
-            METRIC_IDS_SET.has(id),
-          ),
-        ) as RegionProfile["curated"])
-      : undefined;
     profiles.push({
       id: parsed.id,
       slug: parsed.slug,
@@ -90,17 +93,17 @@ function loadProfiles(): RegionProfile[] {
       couplingPolygon: parsed.couplingPolygon,
       strikeAzimuthDeg: parsed.strikeAzimuthDeg,
       convergence: parsed.convergence ?? null,
+      couplingPrior: parsed.couplingPrior,
+      greatRuptures: parsed.greatRuptures,
+      recurrence: parsed.recurrence,
       envSamplePoint: parsed.envSamplePoint,
       featured: parsed.featured,
       context: parsed.context,
-      curated,
     });
   }
   return profiles.sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
-import { METRIC_IDS } from "@/scoring/weights";
-const METRIC_IDS_SET = new Set<string>(METRIC_IDS);
 
 let cache: RegionProfile[] | null = null;
 

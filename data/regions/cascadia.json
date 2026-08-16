@@ -46,5 +46,31 @@
   "context": {
     "en": "Full-margin rupture 26 Jan 1700 (M~9.0, dated by orphan-tsunami and tree-ring records); geodetically locked, exceptionally quiet instrumentally.",
     "es": "Ruptura de todo el margen el 26 de enero de 1700 (M~9.0, fechada por registros de tsunami huérfano y anillos de árboles); acoplado geodésicamente y excepcionalmente silencioso instrumentalmente."
+  },
+  "couplingPrior": {
+    "value": 0.95,
+    "range": [
+      0.9,
+      1
+    ],
+    "sourceName": "McCaffrey et al. (2007, 2013) — fully locked Cascadia from GPS; consistent with seismogenic-temperature models (e.g., Wang et al.)",
+    "sourceDate": "2013-01-01",
+    "confidence": 0.8,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1700,
+      "mag": 9,
+      "fullSegment": true,
+      "label": "26 Jan 1700 full-margin rupture (dated by orphan-tsunami records in Japan and tree rings)"
+    }
+  ],
+  "recurrence": {
+    "years": 500,
+    "source": "Goldfinger et al. (2012) — turbidite record: full-margin recurrence ~430–500 a"
   }
 }

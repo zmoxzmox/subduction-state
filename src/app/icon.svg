@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Subduction State — trench section + epicenter marks -->
+  <style>
+    .bg { fill: #16181d; }
+    .arc1 { stroke: #2a78d6; }
+    .arc2 { stroke: #2a78d6; }
+    .eq { fill: #eb6834; }
+    @media (prefers-color-scheme: light) {
+      .bg { fill: #f4f4f1; }
+      .arc1, .arc2 { stroke: #1c5cab; }
+      .eq { fill: #d95926; }
+    }
+  </style>
+  <rect class="bg" width="64" height="64" rx="14"/>
+  <!-- descending slab -->
+  <path d="M8 20 C 22 20, 34 22, 44 30 C 50 34.5, 54 41, 57 50"
+        fill="none" class="arc1" stroke-width="5" stroke-linecap="round" opacity="0.95"/>
+  <!-- overriding plate surface / second interface -->
+  <path d="M8 31 C 20 31, 30 33, 38 39 C 43 42.5, 47 48, 49 54"
+        fill="none" class="arc2" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+  <!-- epicenter marks along the interface -->
+  <circle class="eq" cx="14.5" cy="21.5" r="3.4"/>
+  <circle class="eq" cx="27" cy="24.5" r="2.6" opacity="0.85"/>
+  <circle class="eq" cx="38.5" cy="29.5" r="3" opacity="0.9"/>
+  <circle class="eq" cx="47.5" cy="38" r="2.2" opacity="0.7"/>
+</svg>

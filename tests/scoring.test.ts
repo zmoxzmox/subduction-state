@@ -226,6 +226,34 @@ describe("activation", () => {
     expect(percentileToActivationScore(95)).toBeCloseTo(75, 5);
     expect(percentileToActivationScore(99)).toBeCloseTo(100, 5);
   });
+
+  it("activation percentile is the CDF — quiet corridors score LOW", async () => {
+    const { computeActivation } = await import("@/scoring/activation");
+    // 3 events vs 12 expected → ~1st percentile → near-zero activation
+    const quiet = computeActivation({
+      recentCount: 3, currentWindowDays: 30,
+      baselineRate: 12.1 / 30, baselineDays: 1795,
+      hasCouplingGeometry: true, hasMechanismData: true,
+    });
+    expect(quiet.percentile!).toBeLessThan(5);
+    expect(quiet.score!).toBeLessThan(10);
+    // zero events → lowest percentile, NOT maximal
+    const zero = computeActivation({
+      recentCount: 0, currentWindowDays: 30,
+      baselineRate: 0.4, baselineDays: 1795,
+      hasCouplingGeometry: true, hasMechanismData: false,
+    });
+    expect(zero.percentile!).toBeLessThan(1);
+    expect(zero.score!).toBeLessThan(5);
+    // unusually busy: 12 events vs 3.6 expected → >95th percentile
+    const busy = computeActivation({
+      recentCount: 12, currentWindowDays: 30,
+      baselineRate: 0.12, baselineDays: 1795,
+      hasCouplingGeometry: true, hasMechanismData: true,
+    });
+    expect(busy.percentile!).toBeGreaterThan(95);
+    expect(busy.score!).toBeGreaterThan(70);
+  });
 });
 
 describe("declustering (ETAS-lite)", () => {

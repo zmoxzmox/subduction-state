@@ -50,5 +50,31 @@
   "context": {
     "en": "Globally most active subduction zone; 2009 Samoa M8.1; extreme seismic and volcanic productivity.",
     "es": "La zona de subducción más activa del mundo; Samoa 2009 (M8.1); productividad sísmica y volcánica extrema."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.25,
+    "range": [
+      0.1,
+      0.4
+    ],
+    "sourceName": "Largely uncoupled Tonga–Kermadec interface from GPS (Bevis et al. 2010); fast subduction with frequent M7.5–8 events",
+    "sourceDate": "2010-01-01",
+    "confidence": 0.5,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1917,
+      "mag": 8.3,
+      "label": "Samoa region, partial"
+    },
+    {
+      "year": 2009,
+      "mag": 8.1,
+      "label": "Samoa–Tonga (extensional outer-rise involvement), partial"
+    }
+  ]
 }

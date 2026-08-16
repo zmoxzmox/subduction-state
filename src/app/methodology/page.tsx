@@ -27,8 +27,9 @@ export default function MethodologyPage() {
         <CardHeader>
           <CardTitle>{t("methodology.what.title")}</CardTitle>
         </CardHeader>
-        <CardBody className="text-sm leading-relaxed text-ink-2">
-          {t("methodology.what.body")}
+        <CardBody className="space-y-2 text-sm leading-relaxed text-ink-2">
+          <p>{t("methodology.what.body")}</p>
+          <p>{t("methodology.what.structural")}</p>
         </CardBody>
       </Card>
 

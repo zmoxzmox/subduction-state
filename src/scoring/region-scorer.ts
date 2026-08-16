@@ -1,5 +1,4 @@
 import type {
-  CuratedMetric,
   EnsoState,
   EnvSample,
   EvidenceItem,
@@ -11,7 +10,7 @@ import type {
   Volcano,
 } from "@/types";
 import { distanceToPolygon, distanceToPolyline, pointInCircle } from "@/lib/geo";
-import { CANONICAL_WEIGHTS } from "./weights";
+import { clamp } from "@/lib/utils";
 import type { ResearchConfig } from "./config";
 import { computeQuiescence } from "./quiescence";
 import { computeActivation } from "./activation";
@@ -20,6 +19,12 @@ import { computeRemotePerturbation } from "./remote-perturbation";
 import { computeEnvironment } from "./environment";
 import { computeVolcanicResponse } from "./volcanic";
 import { aggregateGnss } from "./gnss";
+import {
+  combinedSlipDeficitScore,
+  DEFAULT_RECURRENCE_YEARS,
+  deriveStructural,
+  structuralInputsFromProfile,
+} from "./structural";
 
 /** distance from the trench axis defining the convergent-boundary corridor */
 export const CORRIDOR_KM = 120;
@@ -41,6 +46,8 @@ export interface RegionDynamicData {
   remoteEvents: QuakeEvent[];
   /** trench polylines of all regions on the same margin (same-margin test) */
   marginTrenches?: [number, number][][];
+  /** contributed moment tensors for recent M5.5+ events (detail pages) */
+  momentTensors?: import("@/data/adapters/usgs-moment-tensors").RegionMomentTensors | null;
 }
 
 export interface RegionScoreResult {
@@ -63,55 +70,187 @@ function evidence(
   };
 }
 
-function curatedMetric(
-  regionId: string,
-  id: MetricId,
-  curated: CuratedMetric | undefined,
-): ScoredMetric {
-  const weight = CANONICAL_WEIGHTS[id];
-  if (!curated) {
-    return {
-      id,
-      score: null,
-      weight,
-      status: "missing",
-      confidence: 0,
-      evidence: [],
-    };
-  }
-  return {
-    id,
-    score: curated.score,
-    weight,
-    status: "curated",
-    confidence: curated.confidence,
-    details: {
-      rawValue: curated.rawValue,
-      unit: curated.unit ?? null,
-      sourceDate: curated.sourceDate,
-      lastReviewedAt: curated.lastReviewedAt,
-    },
-    evidence: [
-      evidence(
-        {
-          id: `${id}-${regionId}-curated`,
-          metricId: id,
-          regionId,
-          label: "Curated research prior",
-          value: curated.rawValue,
-          unit: curated.unit,
-          status: "curated",
-          sourceName: curated.sourceName,
-          sourceUrl: curated.sourceUrl,
-          observedAt: curated.sourceDate,
-          methodology: `${curated.methodology.en}`,
-          confidence: curated.confidence,
-          notes: curated.caveats?.en,
-        },
-        curated.confidence,
-      ),
-    ],
+/**
+ * Structural metrics for EVERY region: coupling is a published
+ * literature prior; slip deficit and long-term gap are DERIVED from the
+ * public great-rupture record, the convergence rate and that prior.
+ */
+function structuralMetrics(
+  profile: RegionProfile,
+  weights: Record<MetricId, number>,
+  now: number,
+): ScoredMetric[] {
+  const prior = profile.couplingPrior;
+  const structural = deriveStructural(structuralInputsFromProfile(profile), now);
+  const ruptureSummary = (profile.greatRuptures ?? [])
+    .map((r) => `${r.year} M${r.mag.toFixed(1)}${r.fullSegment ? " (full)" : ""}`)
+    .join("; ");
+
+  /* ---- coupling (curated literature prior) ---- */
+  const coupling: ScoredMetric = {
+    id: "couplingAsperity",
+    score: prior ? Math.round(prior.value * 100) : null,
+    weight: weights.couplingAsperity,
+    status: prior ? "curated" : "missing",
+    confidence: prior?.confidence ?? 0,
+    details: prior
+      ? {
+          lockingFraction: prior.value,
+          publishedRange: prior.range ? `${prior.range[0]}–${prior.range[1]}` : null,
+          sourceDate: prior.sourceDate,
+          impliedSlipDeficitM: structural.slipDeficitM,
+        }
+      : undefined,
+    evidence: prior
+      ? [
+          evidence(
+            {
+              id: `couplingAsperity-${profile.slug}-prior`,
+              metricId: "couplingAsperity",
+              regionId: profile.slug,
+              label: "Published interseismic-coupling prior (segment average)",
+              value: prior.value,
+              unit: "locking fraction",
+              status: "curated",
+              sourceName: prior.sourceName,
+              sourceUrl: prior.sourceUrl,
+              observedAt: prior.sourceDate,
+              methodology:
+                "Score = locking fraction × 100, from the cited study(ies)' central estimate of segment-average coupling. Geodetic coupling models differ in patch geometry and amplitude — this is a literature prior reviewed per source, not a live measurement.",
+              confidence: prior.confidence,
+              notes: prior.note?.en,
+            },
+            prior.confidence,
+          ),
+        ]
+      : [],
   };
+
+  /* ---- slip deficit / cycle maturity (derived) ---- */
+  const slipScore = combinedSlipDeficitScore(structural);
+  const hasRecurrence = !!profile.recurrence;
+  const slipNotes: string[] = [];
+  if (structural.elapsedYears == null) slipNotes.push("no-recorded-great-rupture");
+  if (structural.elapsedYears != null && !hasRecurrence && structural.maturity != null)
+    slipNotes.push(`recurrence-fallback-${DEFAULT_RECURRENCE_YEARS}a`);
+  const slipConfidence = clamp(
+    0.5 +
+      (hasRecurrence ? 0.15 : 0) +
+      (prior ? 0.15 : 0) +
+      (structural.knownInputs.includes("full-segment-rupture-date") ? 0.1 : 0),
+    0,
+    0.85,
+  );
+  const slip: ScoredMetric = {
+    id: "slipDeficitMaturity",
+    score: slipScore,
+    weight: weights.slipDeficitMaturity,
+    status: slipScore != null ? "derived" : "missing",
+    confidence: slipScore != null ? slipConfidence : 0,
+    details: structural.elapsedYears != null
+      ? {
+          elapsedYears: structural.elapsedYears,
+          lastFullSegmentRupture:
+            structuralInputsFromProfile(profile).lastFullSegmentYear ?? null,
+          slipDeficitM: structural.slipDeficitM,
+          maturity: structural.maturity,
+          convergenceMmYr: profile.convergence?.rateMmYr ?? null,
+          couplingPrior: prior?.value ?? null,
+          recurrenceYears: profile.recurrence?.years ?? null,
+          formula: "0.6·deficitScore + 0.4·maturityScore",
+        }
+      : undefined,
+    evidence:
+      slipScore != null
+        ? [
+            evidence(
+              {
+                id: `slipDeficitMaturity-${profile.slug}-derive`,
+                metricId: "slipDeficitMaturity",
+                regionId: profile.slug,
+                label: "Accumulated slip deficit since last full-segment rupture",
+                value: structural.slipDeficitM,
+                unit: "m",
+                status: "derived",
+                sourceName:
+                  "Public historical catalogs (USGS/NEIC, NOAA significant events) + MORVEL convergence + published coupling prior",
+                observedAt: new Date(now).toISOString(),
+                methodology:
+                  `slipDeficit ≈ convergence(m/a) × elapsedSinceLastFullSegmentRupture × coupling. ` +
+                  `Deficit anchors: 4 m → 35, 10 m → 78, ≥18 m → 100 (empirical rupture-slip scaling). ` +
+                  `Combined = 0.6·deficit + 0.4·maturity; maturity = elapsed / recurrence (published, ` +
+                  `else ${DEFAULT_RECURRENCE_YEARS} a documented fallback). Partial ruptures do NOT reset the full-segment deficit. ` +
+                  "Cycle-maturity feature — NOT 'percent toward failure'.",
+                confidence: slipConfidence,
+                notes: slipNotes.join(", ") || undefined,
+              },
+              slipConfidence,
+            ),
+            evidence(
+              {
+                id: `slipDeficitMaturity-${profile.slug}-history`,
+                metricId: "slipDeficitMaturity",
+                regionId: profile.slug,
+                label: "Great-rupture history used (public catalogs)",
+                value: ruptureSummary || "none recorded",
+                status: "derived",
+                sourceName: "USGS/NEIC and NOAA historical earthquake catalogs",
+                confidence: slipConfidence,
+              },
+              slipConfidence,
+            ),
+          ]
+        : [],
+  };
+
+  /* ---- long-term gap (derived) ---- */
+  const gapConfidence = clamp(
+    0.45 + (hasRecurrence ? 0.2 : 0) +
+      (structural.knownInputs.includes("full-segment-rupture-date") ? 0.15 : 0),
+    0,
+    0.8,
+  );
+  const gap: ScoredMetric = {
+    id: "longTermQuiescence",
+    score: structural.longTermQuiescenceScore,
+    weight: weights.longTermQuiescence,
+    status: structural.longTermQuiescenceScore != null ? "derived" : "missing",
+    confidence: structural.longTermQuiescenceScore != null ? gapConfidence : 0,
+    details: structural.elapsedYears != null
+      ? {
+          elapsedYears: structural.elapsedYears,
+          recurrenceYears: profile.recurrence?.years ?? DEFAULT_RECURRENCE_YEARS,
+          recurrenceSource: profile.recurrence?.source ?? `${DEFAULT_RECURRENCE_YEARS} a documented fallback`,
+        }
+      : undefined,
+    evidence:
+      structural.longTermQuiescenceScore != null
+        ? [
+            evidence(
+              {
+                id: `longTermQuiescence-${profile.slug}-derive`,
+                metricId: "longTermQuiescence",
+                regionId: profile.slug,
+                label: "Great-rupture gap vs the segment's own recurrence scale",
+                value: structural.elapsedYears,
+                unit: "a",
+                status: "derived",
+                sourceName:
+                  "Public historical catalogs (USGS/NEIC, NOAA) + published recurrence estimates where available",
+                methodology:
+                  `score = elapsedSinceFullSegmentGreatRupture / recurrence × 100 (capped), recurrence = ` +
+                  `published estimate or the documented ${DEFAULT_RECURRENCE_YEARS} a fallback when none exists. ` +
+                  "'Seismic gap' is a descriptive and contested hypothesis — a gap does not imply imminent rupture.",
+                confidence: gapConfidence,
+                notes: hasRecurrence ? undefined : "recurrence-unpublished-fallback",
+              },
+              gapConfidence,
+            ),
+          ]
+        : [],
+  };
+
+  return [coupling, slip, gap];
 }
 
 export function computeRegionMetrics(
@@ -129,10 +268,8 @@ export function computeRegionMetrics(
     metrics.push({ ...m, weight: weights[m.id as MetricId] ?? 0 });
   };
 
-  /* ---------------- structural curated metrics ---------------- */
-  push(curatedMetric(profile.slug, "couplingAsperity", profile.curated?.couplingAsperity));
-  push(curatedMetric(profile.slug, "slipDeficitMaturity", profile.curated?.slipDeficitMaturity));
-  push(curatedMetric(profile.slug, "longTermQuiescence", profile.curated?.longTermQuiescence));
+  /* ---------------- structural metrics (every region) ------------- */
+  for (const m of structuralMetrics(profile, weights, now)) push(m);
 
   /* ---------------- dynamic seismic metrics ------------------- */
   const minMag = config.thresholds.minMagnitude;
@@ -204,6 +341,7 @@ export function computeRegionMetrics(
         e.mag >= minMag && e.time <= now - recentWindowMs && inEdgeZone(e) && circle(e),
     );
     const corridorBaselineDays = data.baselineDays - config.windows.recentDays;
+    const mt = data.momentTensors;
     activation = computeActivation({
       recentCount: corridorRecent.length,
       currentWindowDays: config.windows.recentDays,
@@ -213,7 +351,7 @@ export function computeRegionMetrics(
           : null,
       baselineDays: corridorBaselineDays,
       hasCouplingGeometry: hasCoupling,
-      hasMechanismData: false,
+      hasMechanismData: (mt?.sampled ?? 0) >= 5,
     });
 
     // along-margin migration
@@ -291,6 +429,13 @@ export function computeRegionMetrics(
           percentile: activation.percentile?.toFixed(1) ?? null,
           windowDays: config.windows.recentDays,
           geometry: profile.couplingPolygon ? "coupling-edge-buffer" : "boundary-corridor",
+          mtSampled: data.momentTensors?.sampled ?? null,
+          mtInterfaceThrustFraction:
+            data.momentTensors && data.momentTensors.sampled > 0
+              ? +(
+                  data.momentTensors.interfaceThrustCount / data.momentTensors.sampled
+                ).toFixed(2)
+              : null,
         }
       : undefined,
     evidence: activation
@@ -316,6 +461,31 @@ export function computeRegionMetrics(
             },
             activation.confidence,
           ),
+          ...(data.momentTensors && data.momentTensors.sampled > 0
+            ? [
+                evidence(
+                  {
+                    id: `interfaceActivation-${profile.slug}-mt`,
+                    metricId: "interfaceActivation",
+                    regionId: profile.slug,
+                    label: "Interface-thrust fraction of sampled M5.5+ moment tensors (365 d)",
+                    value:
+                      +(
+                        data.momentTensors.interfaceThrustCount /
+                        data.momentTensors.sampled
+                      ).toFixed(2),
+                    status: "derived",
+                    sourceName: "USGS moment tensors (ComCat event detail)",
+                    sourceUrl: "https://earthquake.usgs.gov/data/comcat/",
+                    methodology:
+                      `Reverse classification: shallowly-dipping nodal plane with rake within ±45° of 90° and dip < 60°; ` +
+                      `interface-consistent additionally requires 10–60 km depth. ${data.momentTensors.interfaceThrustCount}/${data.momentTensors.sampled} sampled events classify as interface thrusts. Raises this metric's confidence; never used alone.`,
+                    confidence: 0.5,
+                  },
+                  0.5,
+                ),
+              ]
+            : []),
         ]
       : [],
   });

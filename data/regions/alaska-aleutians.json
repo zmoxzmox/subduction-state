@@ -50,5 +50,48 @@
   "context": {
     "en": "1964 M9.2 Alaska and 1938/1946/1957/1965 Aleutian M8+ ruptures; recent M7.8 Simeonof (2020) and M8.2 Chignik (2021).",
     "es": "Rupturas de Alaska 1964 (M9.2) y de las Aleutianas 1938/1946/1957/1965 (M8+); recientes M7.8 Simeonof (2020) y M8.2 Chignik (2021)."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.75,
+    "range": [
+      0.5,
+      0.9
+    ],
+    "sourceName": "Pre-2021 locked asperities of the Alaska–Aleutian margin documented by GPS studies (e.g., Elliott & Freymueller 2020; Shumagin-segment coupling remains debated)",
+    "sourceDate": "2020-01-01",
+    "confidence": 0.55,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1938,
+      "mag": 8.3,
+      "fullSegment": true,
+      "label": "Alaska Peninsula"
+    },
+    {
+      "year": 1946,
+      "mag": 8.6,
+      "label": "Aleutians (further west), partial for this segment"
+    },
+    {
+      "year": 1964,
+      "mag": 9.2,
+      "label": "Prince William Sound — east of this segment"
+    },
+    {
+      "year": 2020,
+      "mag": 7.8,
+      "label": "Simeonof, partial"
+    },
+    {
+      "year": 2021,
+      "mag": 8.2,
+      "fullSegment": true,
+      "label": "Chignik — re-ruptured most of the 1938 zone"
+    }
+  ]
 }

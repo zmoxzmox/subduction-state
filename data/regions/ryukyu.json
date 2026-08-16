@@ -46,5 +46,31 @@
   "context": {
     "en": "1911 Kikaijima M8.0; very low instrumental seismicity with documented slow-slip — a weakly coupled end-member.",
     "es": "Kikaijima 1911 (M8.0); sismicidad instrumental muy baja con deslizamiento lento documentado — un caso extremo de bajo acoplamiento."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.2,
+    "range": [
+      0.1,
+      0.35
+    ],
+    "sourceName": "Weak interseismic coupling of the Ryukyu margin documented by GNSS studies (e.g., Nishimura et al. 2018)",
+    "sourceDate": "2018-01-01",
+    "confidence": 0.5,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1771,
+      "mag": 8,
+      "label": "Yaeyama tsunami (historic, source debated)"
+    },
+    {
+      "year": 1911,
+      "mag": 8,
+      "label": "Kikaijima, partial"
+    }
+  ]
 }

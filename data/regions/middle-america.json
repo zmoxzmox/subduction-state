@@ -46,5 +46,41 @@
   "context": {
     "en": "1985 Michoacán M8.0 (Mexico City); 1992 Nicaragua tsunami earthquake; short recurrence, well-instrumented.",
     "es": "Michoacán 1985 (M8.0, Ciudad de México); terremoto de tsunami de Nicaragua 1992; recurrencia corta y bien instrumentado."
+  },
+  "couplingPrior": {
+    "value": 0.5,
+    "range": [
+      0.3,
+      0.7
+    ],
+    "sourceName": "Moderate, heterogeneous coupling of the Middle America Trench (e.g., Franco et al. 2012); Guerrero slow-slip episodes release part of the interface",
+    "sourceDate": "2012-01-01",
+    "confidence": 0.45,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1932,
+      "mag": 8.1,
+      "label": "Jalisco, partial"
+    },
+    {
+      "year": 1985,
+      "mag": 8,
+      "fullSegment": true,
+      "label": "Michoacán — segment-scale rupture (Mexico City disaster)"
+    },
+    {
+      "year": 1995,
+      "mag": 8,
+      "label": "Colima–Jalisco, western partial"
+    }
+  ],
+  "recurrence": {
+    "years": 60,
+    "source": "Mexican seismic-cycle studies (~30–70 a segment recurrence)"
   }
 }

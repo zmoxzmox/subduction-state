@@ -1,20 +1,41 @@
 {
   "id": "central-peru-lima",
   "slug": "central-peru-lima",
-  "name": { "en": "Central Peru / Lima", "es": "Perú central / Lima" },
+  "name": {
+    "en": "Central Peru / Lima",
+    "es": "Perú central / Lima"
+  },
   "platePair": {
     "en": "Nazca Plate → South American Plate",
     "es": "Placa de Nazca → Placa Sudamericana"
   },
   "margin": "nazca-southamerica",
-  "center": [-77.0, -12.0],
+  "center": [
+    -77,
+    -12
+  ],
   "radiusKm": 350,
   "trench": [
-    [-78.0, -8.5],
-    [-78.4, -10.0],
-    [-78.9, -12.0],
-    [-79.3, -13.5],
-    [-79.7, -15.0]
+    [
+      -78,
+      -8.5
+    ],
+    [
+      -78.4,
+      -10
+    ],
+    [
+      -78.9,
+      -12
+    ],
+    [
+      -79.3,
+      -13.5
+    ],
+    [
+      -79.7,
+      -15
+    ]
   ],
   "strikeAzimuthDeg": 314,
   "convergence": {
@@ -22,70 +43,84 @@
     "azimuthDeg": 78,
     "source": "MORVEL (DeMets et al., 2010) and regional GPS studies (approximate segment-average)"
   },
-  "envSamplePoint": [-78.6, -12.6],
+  "envSamplePoint": [
+    -78.6,
+    -12.6
+  ],
   "featured": true,
   "context": {
-    "en": "Reference implementation region. Geodesy indicates a large, highly locked patch offshore central Peru. The central Lima segment last ruptured at great scale in 1746; adjacent segments produced M8.0–8.2 events in 1942, 1974 and 2007 (Pisco). Curated structural values below are research priors from published studies — not live measurements.",
-    "es": "Región de implementación de referencia. La geodesia indica un extenso parche fuertemente acoplado frente al Perú central. El segmento central de Lima rupturó a gran escala por última vez en 1746; segmentos adyacentes produjeron eventos M8.0–8.2 en 1942, 1974 y 2007 (Pisco). Los valores estructurales curados de abajo son a priori de investigación de estudios publicados — no mediciones en vivo."
+    "en": "Reference implementation region. Geodesy indicates a large, highly locked patch offshore central Peru (Villegas-Lanza et al. 2016). The central Lima segment last ruptured at great scale in 1746; adjacent segments produced M8.0-8.2 events in 1942, 1974 and 2007 (Pisco). Structural variables below are computed from this public rupture history, published coupling and the convergence rate - cited per value.",
+    "es": "Región de implementación de referencia. La geodesia indica un extenso parche fuertemente acoplado frente al Perú central (Villegas-Lanza et al. 2016). El segmento central de Lima rupturó a gran escala por última vez en 1746; segmentos adyacentes produjeron eventos M8.0–8.2 en 1942, 1974 y 2007 (Pisco). Las variables estructurales se calculan a partir de este historial público de rupturas, el acoplamiento publicado y la tasa de convergencia — con fuentes por valor."
   },
   "couplingPolygon": [
-    [-78.8, -10.5],
-    [-77.0, -10.4],
-    [-76.2, -11.5],
-    [-76.3, -13.0],
-    [-76.8, -14.3],
-    [-78.6, -14.3],
-    [-79.2, -12.5],
-    [-78.8, -10.5]
+    [
+      -78.8,
+      -10.5
+    ],
+    [
+      -77,
+      -10.4
+    ],
+    [
+      -76.2,
+      -11.5
+    ],
+    [
+      -76.3,
+      -13
+    ],
+    [
+      -76.8,
+      -14.3
+    ],
+    [
+      -78.6,
+      -14.3
+    ],
+    [
+      -79.2,
+      -12.5
+    ],
+    [
+      -78.8,
+      -10.5
+    ]
   ],
-  "curated": {
-    "couplingAsperity": {
-      "score": 95,
-      "rawValue": "locking ratio ≈ 0.7–0.95 over the central Peru locked patch",
-      "methodology": {
-        "en": "Geodetic interseismic-coupling studies of the Nazca megathrust off central Peru consistently image a coherent, strongly locked patch between roughly 10.5°S and 14°S extending from the trench to the coastline. Score reflects the mean locking ratio of that patch (≈0.8–0.95 in published coupling models). Curated research prior — not a live measurement.",
-        "es": "Los estudios geodésicos de acoplamiento intersísmico de la megafalla de Nazca frente al Perú central muestran de forma consistente un parche coherente y fuertemente acoplado entre aproximadamente 10.5°S y 14°S, desde la fosa hasta la costa. El puntaje refleja la razón de acoplamiento media de ese parche (≈0.8–0.95 en los modelos publicados). A priori de investigación curada — no es una medición en vivo."
-      },
-      "sourceName": "Villegas-Lanza et al. (2016), JGR Solid Earth — Active tectonics of Peru: heterogeneous interseismic coupling along the Nazca megathrust",
-      "sourceDate": "2016-06-01",
-      "confidence": 0.75,
-      "lastReviewedAt": "2026-08-01",
-      "caveats": {
-        "en": "Coupling models differ in patch geometry and amplitude; score is a segment-average prior, updated only through literature review.",
-        "es": "Los modelos de acoplamiento difieren en la geometría y amplitud del parche; el puntaje es un a priori promedio del segmento, actualizado solo mediante revisión de literatura."
-      }
-    },
-    "slipDeficitMaturity": {
-      "score": 85,
-      "rawValue": "last great central-segment rupture 1746 (~280 yr ago); adjacent M8+ ruptures 1942/1974/2007; convergence ≈ 67 mm/yr",
-      "methodology": {
-        "en": "Cycle-maturity feature combining time since the last segment-scale great rupture on the central Lima patch (1746) with the ~67 mm/yr Nazca–South America convergence. Large 20th-century ruptures (1942, 1974, 2007 Pisco) broke adjacent or partial segments, leaving the central patch without a full-width great rupture for ~280 years. Score is a cycle-maturity feature — it is NOT 'percent toward failure'.",
-        "es": "Característica de madurez del ciclo que combina el tiempo desde la última gran ruptura del segmento central de Lima (1746) con la convergencia Nazca–Sudamérica de ~67 mm/a. Las grandes rupturas del siglo XX (1942, 1974, 2007 Pisco) rompieron segmentos adyacentes o parciales, dejando el parche central sin una gran ruptura de ancho completo durante ~280 años. El puntaje es una característica de madurez del ciclo — NO es un 'porcentaje hacia la falla'."
-      },
-      "sourceName": "Historical earthquake catalog (USGS/NEIC) and published seismic-cycle studies of the central Peru margin",
-      "sourceDate": "2026-07-15",
-      "confidence": 0.6,
-      "lastReviewedAt": "2026-08-01",
-      "caveats": {
-        "en": "1746 magnitude and rupture extent are historical reconstructions; recurrence intervals for this segment are poorly constrained.",
-        "es": "La magnitud y extensión de la ruptura de 1746 son reconstrucciones históricas; los intervalos de recurrencia de este segmento están mal restringidos."
-      }
-    },
-    "longTermQuiescence": {
-      "score": 90,
-      "rawValue": "no segment-scale great rupture of the central patch since 1746 despite high geodetic locking",
-      "methodology": {
-        "en": "Long-duration relative absence of great ruptures over a highly coupled segment. The central Lima patch has not produced a segment-scale great event since 1746, while geodesy shows it strongly locked — the configuration classic seismic-gap literature describes. Slowly evolving prior, updated only through literature review.",
-        "es": "Ausencia relativa de larga durancia de grandes rupturas sobre un segmento altamente acoplado. El parche central de Lima no ha producido un evento de gran escala desde 1746, mientras la geodesia muestra un acoplamiento fuerte — la configuración que describe la literatura clásica de brechas sísmicas. A priori de evolución lenta, actualizado solo mediante revisión de literatura."
-      },
-      "sourceName": "Seismic-gap literature (e.g., Nishenko, 1991, Circum-Pacific seismic potential) and historical catalogs",
-      "sourceDate": "2026-07-15",
-      "confidence": 0.65,
-      "lastReviewedAt": "2026-08-01",
-      "caveats": {
-        "en": "'Seismic gap' is a descriptive, contested hypothesis — gaps do not imply imminent rupture.",
-        "es": "La 'brecha sísmica' es una hipótesis descriptiva y discutida — una brecha no implica ruptura inminente."
-      }
+  "couplingPrior": {
+    "value": 0.9,
+    "range": [
+      0.7,
+      0.95
+    ],
+    "sourceName": "Villegas-Lanza et al. (2016), JGR Solid Earth — Active tectonics of Peru: heterogeneous interseismic coupling along the Nazca megathrust",
+    "sourceDate": "2016-06-01",
+    "confidence": 0.75,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
     }
-  }
+  },
+  "greatRuptures": [
+    {
+      "year": 1746,
+      "mag": 8.7,
+      "fullSegment": true,
+      "label": "Lima–Callao full-segment rupture"
+    },
+    {
+      "year": 1942,
+      "mag": 8.2,
+      "label": "northern-edge partial rupture"
+    },
+    {
+      "year": 1974,
+      "mag": 8.1,
+      "label": "north of Lima, partial"
+    },
+    {
+      "year": 2007,
+      "mag": 8,
+      "label": "Pisco, southern partial rupture"
+    }
+  ]
 }

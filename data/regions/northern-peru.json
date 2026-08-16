@@ -42,5 +42,26 @@
   "context": {
     "en": "Includes the 1970 M7.9 Chimbote rupture zone; flat-slab subduction begins north of ~9°S.",
     "es": "Incluye la zona de ruptura de Chimbote de 1970 (M7.9); al norte de ~9°S comienza la subducción de losa plana."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.45,
+    "range": [
+      0.2,
+      0.7
+    ],
+    "sourceName": "Villegas-Lanza et al. (2016), JGR Solid Earth — reduced locking on the northern Peru / flat-slab transition",
+    "sourceDate": "2016-06-01",
+    "confidence": 0.5,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1970,
+      "mag": 7.9,
+      "label": "Chimbote (destructive; partial interface involvement)"
+    }
+  ]
 }

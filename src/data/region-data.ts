@@ -11,6 +11,7 @@ import { getSstSample } from "./adapters/noaa-sst";
 import { getSshSample } from "./adapters/noaa-ssh";
 import { getEnso } from "./adapters/noaa-enso";
 import { getRegionGnss } from "./adapters/gnss";
+import { getRegionMomentTensors } from "./adapters/usgs-moment-tensors";
 import { getRegionProfiles } from "@/regions/profiles";
 
 export interface RegionDataBundle extends RegionDynamicData {
@@ -27,7 +28,12 @@ export interface RegionDataBundle extends RegionDynamicData {
 export async function getRegionDynamicData(
   profile: RegionProfile,
   config: ResearchConfig = CANONICAL_CONFIG,
-  opts: { includeGnss?: boolean; includeEnv?: boolean; envHistory?: boolean } = {},
+  opts: {
+    includeGnss?: boolean;
+    includeEnv?: boolean;
+    envHistory?: boolean;
+    momentTensors?: boolean;
+  } = {},
 ): Promise<RegionDataBundle> {
   const includeGnss = opts.includeGnss ?? true;
   const includeEnv = opts.includeEnv ?? true;
@@ -38,6 +44,13 @@ export async function getRegionDynamicData(
     getEnso(),
     getRemoteCandidates().catch(() => null),
   ]);
+
+  // contributed moment tensors: region-detail pages only (bounded set
+  // of upstream detail requests, each cached 7 d)
+  const momentTensors =
+    (opts.momentTensors ?? false) && catalogRes
+      ? await getRegionMomentTensors(profile, catalogRes.data.events).catch(() => null)
+      : null;
 
   const catalog: QuakeEvent[] | null = catalogRes
     ? decluster(catalogRes.data.events)
@@ -98,6 +111,7 @@ export async function getRegionDynamicData(
     enso: ensoRes?.latest ?? null,
     gnssStations: gnss.stations,
     remoteEvents: remoteRes?.data ?? [],
+    momentTensors,
     marginTrenches,
     modes: {
       catalog: catalogMode,

@@ -42,5 +42,46 @@
   "context": {
     "en": "Historic gap segment (1877 M8.8); partial ruptures 1995 Antofagasta M8.0 and 2014 Iquique M8.2.",
     "es": "Segmento de brecha histórica (1877, M8.8); rupturas parciales en 1995 Antofagasta (M8.0) y 2014 Iquique (M8.2)."
+  },
+  "couplingPrior": {
+    "value": 0.85,
+    "range": [
+      0.7,
+      1
+    ],
+    "sourceName": "Metois et al. (2013), JGR — interseismic coupling of the northern Chile margin; Schurr et al. (2014) — pre-Iquique locking",
+    "sourceDate": "2014-01-01",
+    "confidence": 0.7,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1868,
+      "mag": 8.8,
+      "label": "southern-edge partial"
+    },
+    {
+      "year": 1877,
+      "mag": 8.8,
+      "fullSegment": true,
+      "label": "Iquique–Arica full-segment"
+    },
+    {
+      "year": 1995,
+      "mag": 8,
+      "label": "Antofagasta, southern partial"
+    },
+    {
+      "year": 2014,
+      "mag": 8.2,
+      "label": "Iquique, partial"
+    }
+  ],
+  "recurrence": {
+    "years": 120,
+    "source": "published segment-recurrence estimates for the northern Chile gap (~100–130 a)"
   }
 }

@@ -185,6 +185,32 @@ export interface CuratedMetric {
   caveats?: { en?: string; es?: string };
 }
 
+/** Published interseismic-coupling prior (segment-average literature value). */
+export interface CouplingPrior {
+  /** mean locking fraction 0..1 */
+  value: number;
+  /** published range, if given */
+  range?: [number, number];
+  sourceName: string;
+  sourceUrl?: string;
+  sourceDate: string;
+  confidence: number;
+  note?: { en?: string; es?: string };
+}
+
+/**
+ * Segment-scale great rupture from the public historical catalog
+ * (USGS/NEIC, NOAA significant events). `fullSegment` marks ruptures
+ * that released essentially the whole segment; partial ruptures release
+ * only part of it and do not reset the full-cycle deficit.
+ */
+export interface GreatRupture {
+  year: number;
+  mag: number;
+  fullSegment?: boolean;
+  label?: string;
+}
+
 export interface RegionProfile {
   id: string;
   slug: string;
@@ -207,11 +233,15 @@ export interface RegionProfile {
   /** azimuth of the along-strike direction at the segment (degrees from north) */
   strikeAzimuthDeg: number;
   convergence: { rateMmYr: number; azimuthDeg: number; source: string } | null;
+  /** published interseismic-coupling prior (drives the coupling metric) */
+  couplingPrior?: CouplingPrior;
+  /** public great-rupture history (drives derived slip-deficit + gap metrics) */
+  greatRuptures?: GreatRupture[];
+  /** published mean recurrence estimate, where it exists */
+  recurrence?: { years: number; source: string };
   /** offshore point used for SST/SSH sampling */
   envSamplePoint: [lon: number, lat: number];
   featured?: boolean;
-  /** curated structural priors — only where peer-reviewed evidence exists */
-  curated?: Partial<Record<MetricId, CuratedMetric>>;
   context?: { en: string; es: string };
 }
 

@@ -46,5 +46,47 @@
   "context": {
     "en": "Repeat M8+ ruptures (684, 1361, 1707, 1854, 1944 Tonankai, 1946 Nankai); well-documented slow-slip and tremor.",
     "es": "Rupturas M8+ repetidas (684, 1361, 1707, 1854, 1944 Tōnankai, 1946 Nankai); deslizamiento lento y temblor bien documentados."
+  },
+  "couplingPrior": {
+    "value": 0.85,
+    "range": [
+      0.7,
+      1
+    ],
+    "sourceName": "Yokota et al. (2016), Science — seafloor geodetic constraints: strongly locked asperities along the Nankai Trough; consistent with onshore GPS (e.g., Loveless & Meade)",
+    "sourceDate": "2016-01-01",
+    "confidence": 0.7,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1707,
+      "mag": 8.7,
+      "fullSegment": true,
+      "label": "Hōei — whole-trough rupture"
+    },
+    {
+      "year": 1854,
+      "mag": 8.4,
+      "fullSegment": true,
+      "label": "Ansei Tōkai + Nankai pair (~30 h apart)"
+    },
+    {
+      "year": 1944,
+      "mag": 7.9,
+      "label": "Tōnankai, partial"
+    },
+    {
+      "year": 1946,
+      "mag": 8,
+      "label": "Nankai, partial"
+    }
+  ],
+  "recurrence": {
+    "years": 117,
+    "source": "historical Nankai earthquake-cycle studies (~90–150 a)"
   }
 }

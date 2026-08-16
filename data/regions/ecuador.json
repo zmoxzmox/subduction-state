@@ -42,5 +42,42 @@
   "context": {
     "en": "1906 M8.8 Ecuador–Colombia rupture; 2016 Pedernales M7.8 re-ruptured part of the segment.",
     "es": "Ruptura Ecuador–Colombia de 1906 (M8.8); el evento de Pedernales de 2016 (M7.8) rompió parte del segmento de nuevo."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.7,
+    "range": [
+      0.5,
+      0.85
+    ],
+    "sourceName": "Geodetic coupling studies of the Ecuador margin (locked patch offshore pre-2016; partial release in Pedernales 2016 and subsequent re-locking studies)",
+    "sourceDate": "2016-01-01",
+    "confidence": 0.5,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1906,
+      "mag": 8.8,
+      "fullSegment": true,
+      "label": "Ecuador–Colombia full-margin"
+    },
+    {
+      "year": 1942,
+      "mag": 7.9,
+      "label": "partial"
+    },
+    {
+      "year": 1979,
+      "mag": 8.2,
+      "label": "Tumaco (Colombia side), partial"
+    },
+    {
+      "year": 2016,
+      "mag": 7.8,
+      "label": "Pedernales, partial"
+    }
+  ]
 }

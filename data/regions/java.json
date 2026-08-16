@@ -46,5 +46,31 @@
   "context": {
     "en": "1994 M7.8 and 2006 M7.7 tsunami earthquakes; documented episodic slow-slip west of Java.",
     "es": "Terremotos de tsunami de 1994 (M7.8) y 2006 (M7.7); deslizamiento lento episódico documentado al oeste de Java."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.2,
+    "range": [
+      0.1,
+      0.35
+    ],
+    "sourceName": "Weak coupling of the Java margin documented by geodetic studies; tsunamigenic slow events (1994, 2006) released with little short-period radiation",
+    "sourceDate": "2018-01-01",
+    "confidence": 0.4,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1994,
+      "mag": 7.8,
+      "label": "tsunami earthquake, partial"
+    },
+    {
+      "year": 2006,
+      "mag": 7.7,
+      "label": "Pangandaran tsunami earthquake, partial"
+    }
+  ]
 }

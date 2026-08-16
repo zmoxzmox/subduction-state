@@ -42,5 +42,38 @@
   "context": {
     "en": "2001 M8.4 Arequipa/Moquegua rupture; 1868 Arica M8.5+ at the southern boundary.",
     "es": "Ruptura de Arequipa/Moquegua de 2001 (M8.4); evento de Arica de 1868 (M8.5+) en el límite sur."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.6,
+    "range": [
+      0.4,
+      0.8
+    ],
+    "sourceName": "Post-2001 re-locking documented by GPS studies of the southern Peru margin (e.g., Perfettini et al. 2010; Villegas-Lanza et al. 2016)",
+    "sourceDate": "2016-06-01",
+    "confidence": 0.5,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1604,
+      "mag": 8.9,
+      "fullSegment": true,
+      "label": "historic Arequipa–Arica event (magnitude uncertain)"
+    },
+    {
+      "year": 1868,
+      "mag": 8.8,
+      "fullSegment": true,
+      "label": "Arica"
+    },
+    {
+      "year": 2001,
+      "mag": 8.4,
+      "label": "Arequipa–Moquegua, partial"
+    }
+  ]
 }

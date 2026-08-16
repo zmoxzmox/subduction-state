@@ -231,6 +231,7 @@ export async function getRegionDetail(
   const data = await getRegionDynamicData(profile, CANONICAL_CONFIG, {
     includeGnss,
     includeEnv: !replay,
+    momentTensors: !replay,
   });
 
   // replay: truncate the catalog at asOf; env/gnss/volcano unknown

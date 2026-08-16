@@ -42,5 +42,37 @@
   "context": {
     "en": "1979 Tumaco M8.2 rupture; shares the 1906 M8.8 margin-scale event with Ecuador.",
     "es": "Ruptura de Tumaco de 1979 (M8.2); comparte con Ecuador el evento de margen completo de 1906 (M8.8)."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.65,
+    "range": [
+      0.5,
+      0.8
+    ],
+    "sourceName": "Geodetic studies of the Colombia–Ecuador margin after the 1979 Tumaco rupture (documented locking of the southern segment)",
+    "sourceDate": "2016-01-01",
+    "confidence": 0.45,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1906,
+      "mag": 8.8,
+      "fullSegment": true,
+      "label": "Ecuador–Colombia full-margin"
+    },
+    {
+      "year": 1958,
+      "mag": 7.8,
+      "label": "partial"
+    },
+    {
+      "year": 1979,
+      "mag": 8.2,
+      "label": "Tumaco, partial"
+    }
+  ]
 }

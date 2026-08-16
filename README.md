@@ -28,9 +28,9 @@ loaded-but-quiet megathrust regime:
 
 | Variable | Weight | Type |
 |---|---:|---|
-| Megathrust coupling / asperity geometry | 20 | curated |
-| Accumulated slip deficit / cycle maturity | 15 | curated |
-| Long-term seismic gap / persistent quiescence | 10 | curated |
+| Megathrust coupling / asperity geometry | 20 | curated prior |
+| Accumulated slip deficit / cycle maturity | 15 | derived |
+| Long-term seismic gap / persistent quiescence | 10 | derived |
 | Recent local seismic quiescence | 10 | derived |
 | Local interface / edge activation | 10 | derived |
 | Current GNSS / strain transient | 20 | derived (often unknown) |
@@ -38,6 +38,34 @@ loaded-but-quiet megathrust regime:
 | Remote dynamic / same-margin perturbation | 3 | experimental |
 | Volcanic multidomain response | 2 | experimental |
 | Along-margin migration | 5 | experimental |
+
+**Structural variables for every region.** There is no global live coupling
+API, so the three structural variables are built as:
+
+- **Coupling** — a published, cited per-segment literature prior (e.g.
+  Villegas-Lanza et al. 2016 for central Peru; McCaffrey et al. for Cascadia;
+  Yokota et al. 2016 for Nankai; Chlieh et al. 2008 for Sumatra; …). The value
+  shown is `locking fraction × 100` with the cited range and confidence.
+- **Slip deficit (derived)** — `convergence (MORVEL) × years since the last
+  full-segment great rupture × coupling`, scored against empirical slip
+  scaling (4 m → 35, 10 m → 78, ≥18 m → 100) and combined 0.6·deficit +
+  0.4·maturity. Partial ruptures (e.g. Lima 1942/1974/2007) do **not** reset
+  the full-segment deficit.
+- **Long-term gap (derived)** — great-rupture gap vs the segment's own
+  recurrence estimate where published (Cascadia ~500 a, Nankai ~117 a,
+  Mentawai ~200 a, northern Chile ~120 a), with a documented 300-a fallback.
+
+The rupture record itself is public catalog fact (USGS/NEIC, NOAA), stored
+per profile with `fullSegment` flags — so every region is computed from the
+same transparent pipeline, not hand-set scores. Margins with no recorded
+segment-scale great rupture (e.g. the Philippines) honestly return *unknown*
+for the derived metrics.
+
+**Moment tensors (USGS ComCat)** are read for recent M5.5+ events on region
+pages: reverse-mechanism classification (rake within ±45° of 90° on a plane
+dipping < 60°; interface-consistent at 10–60 km depth) raises the
+interface-activation metric's confidence and adds an interface-thrust
+fraction to its evidence.
 
 Score mathematics (missing data never become zero):
 
@@ -183,6 +211,9 @@ Formulas, anchors and limitations are enumerated on `/methodology`.
 
 ## Current known gaps
 
+- Coupling priors are segment-average literature values — per-patch coupling
+  geometry is not served by any global public API (the evidence drawer always
+  shows the citation, range and confidence).
 - GNSS coverage depends on public processed series; most segments have < 3 current
   stations nearby, so the metric legitimately stays *unknown*.
 - GEM fault geometry requires a configured export URL.
@@ -207,6 +238,16 @@ Formulas, anchors and limitations are enumerated on `/methodology`.
   "trench": [[lon, lat], …],
   "strikeAzimuthDeg": 315,
   "convergence": { "rateMmYr": 67, "azimuthDeg": 78, "source": "…" },
+  "couplingPrior": {
+    "value": 0.85, "range": [0.7, 1.0],
+    "sourceName": "Author(s) (year) — title/journal",
+    "sourceDate": "2013-01-01", "confidence": 0.7
+  },
+  "greatRuptures": [
+    { "year": 1877, "mag": 8.8, "fullSegment": true, "label": "…" },
+    { "year": 2014, "mag": 8.2, "label": "partial" }
+  ],
+  "recurrence": { "years": 120, "source": "published estimate (…)" },
   "envSamplePoint": [lon, lat],
   "context": { "en": "…", "es": "…" }
 }
@@ -214,9 +255,12 @@ Formulas, anchors and limitations are enumerated on `/methodology`.
 
    The analysis polygon is generated from `center`/`radiusKm`. Use the same `margin`
    id as neighboring segments so same-margin remote-perturbation logic works.
-2. **Do not invent structural scores.** Add a `curated` block only if peer-reviewed
-   coupling/slip-deficit/gap evidence exists — each value requires `score`, `rawValue`,
-   bilingual `methodology`, `sourceName`, `sourceDate`, `confidence`, `lastReviewedAt`.
+2. **Cite everything.** `couplingPrior` must reference a real published geodesy
+   study (value + range + confidence); `greatRuptures` come from the public
+   historical catalog (USGS/NEIC, NOAA) with `fullSegment` true only for
+   ruptures that released essentially the whole segment. Slip deficit and
+   long-term gap are then COMPUTED for the new region by the same pipeline —
+   never hand-set.
 3. Restart the server — the profile is validated (Zod) and picked up automatically;
    dynamic metrics compute from live data on the next scoring pass.
 

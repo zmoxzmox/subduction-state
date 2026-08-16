@@ -46,5 +46,36 @@
   "context": {
     "en": "1931 Hawke's Bay M7.8; world's best-documented shallow slow-slip cycle (recurring every ~2 years).",
     "es": "Hawke's Bay 1931 (M7.8); el ciclo de deslizamiento lento somero mejor documentado del mundo (recurrente cada ~2 años)."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.45,
+    "range": [
+      0.2,
+      0.7
+    ],
+    "sourceName": "Strong along-strike variation: weak shallow locking + deeper locked asperities, recurring slow-slip (Wallace et al. 2012 and successors)",
+    "sourceDate": "2012-01-01",
+    "confidence": 0.55,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1855,
+      "mag": 8.2,
+      "label": "Wairarapa (largely crustal), partial"
+    },
+    {
+      "year": 1931,
+      "mag": 7.8,
+      "label": "Hawke's Bay, partial"
+    },
+    {
+      "year": 1947,
+      "mag": 7.4,
+      "label": "Gisborne tsunamigenic slow event, partial"
+    }
+  ]
 }

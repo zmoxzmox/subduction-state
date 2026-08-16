@@ -46,5 +46,31 @@
   "context": {
     "en": "1998 Aitape tsunami; very rapid convergence with multiple simultaneous trenches and block boundaries.",
     "es": "Tsunami de Aitape de 1998; convergencia muy rápida con múltiples fosas simultáneas y límites de bloques."
-  }
+  },
+  "couplingPrior": {
+    "value": 0.4,
+    "range": [
+      0.2,
+      0.6
+    ],
+    "sourceName": "Complex multi-trench system with sparse geodesy; coupling estimates approximate (New Britain / Solomon Sea studies)",
+    "sourceDate": "2020-01-01",
+    "confidence": 0.3,
+    "note": {
+      "en": "Segment-average literature prior (central estimate of the cited range). Coupling models differ in patch geometry and amplitude — see methodology.",
+      "es": "A priori de literatura promedio del segmento (estimación central del rango citado). Los modelos de acoplamiento difieren en geometría y amplitud del parche — ver metodología."
+    }
+  },
+  "greatRuptures": [
+    {
+      "year": 1998,
+      "mag": 7,
+      "label": "Aitape tsunami, partial"
+    },
+    {
+      "year": 2000,
+      "mag": 8,
+      "label": "New Ireland (largely strike-slip), not interface"
+    }
+  ]
 }
