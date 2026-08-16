@@ -1,0 +1,50 @@
+{
+  "id": "papua-new-guinea",
+  "slug": "papua-new-guinea",
+  "name": {
+    "en": "Papua New Guinea",
+    "es": "Papúa Nueva Guinea"
+  },
+  "platePair": {
+    "en": "Australian Plate → Pacific/South Bismarck Plates",
+    "es": "Placa Australiana → Placas del Pacífico/Bismarck Sur"
+  },
+  "margin": "australia-pacific",
+  "center": [
+    147.3,
+    -6.3
+  ],
+  "radiusKm": 450,
+  "trench": [
+    [
+      143,
+      -5
+    ],
+    [
+      146,
+      -5.8
+    ],
+    [
+      149,
+      -6.3
+    ],
+    [
+      151.5,
+      -6.2
+    ]
+  ],
+  "strikeAzimuthDeg": 98,
+  "convergence": {
+    "rateMmYr": 100,
+    "azimuthDeg": 20,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    148.5,
+    -6.6
+  ],
+  "context": {
+    "en": "1998 Aitape tsunami; very rapid convergence with multiple simultaneous trenches and block boundaries.",
+    "es": "Tsunami de Aitape de 1998; convergencia muy rápida con múltiples fosas simultáneas y límites de bloques."
+  }
+}

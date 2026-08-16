@@ -1,0 +1,54 @@
+{
+  "id": "tonga-kermadec",
+  "slug": "tonga-kermadec",
+  "name": {
+    "en": "Tonga–Kermadec",
+    "es": "Tonga–Kermadec"
+  },
+  "platePair": {
+    "en": "Pacific Plate → Australian Plate",
+    "es": "Placa del Pacífico → Placa Australiana"
+  },
+  "margin": "australia-pacific",
+  "center": [
+    -176,
+    -20.3
+  ],
+  "radiusKm": 450,
+  "trench": [
+    [
+      -179,
+      -15
+    ],
+    [
+      -177.5,
+      -17
+    ],
+    [
+      -176,
+      -19.5
+    ],
+    [
+      -174.5,
+      -22
+    ],
+    [
+      -173.5,
+      -25
+    ]
+  ],
+  "strikeAzimuthDeg": 153,
+  "convergence": {
+    "rateMmYr": 77,
+    "azimuthDeg": 275,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -175,
+    -21
+  ],
+  "context": {
+    "en": "Globally most active subduction zone; 2009 Samoa M8.1; extreme seismic and volcanic productivity.",
+    "es": "La zona de subducción más activa del mundo; Samoa 2009 (M8.1); productividad sísmica y volcánica extrema."
+  }
+}

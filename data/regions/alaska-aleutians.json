@@ -1,0 +1,54 @@
+{
+  "id": "alaska-aleutians",
+  "slug": "alaska-aleutians",
+  "name": {
+    "en": "Alaska–Aleutians",
+    "es": "Alaska–Aleutianas"
+  },
+  "platePair": {
+    "en": "Pacific Plate → North American Plate",
+    "es": "Placa del Pacífico → Placa Norteamericana"
+  },
+  "margin": "pacific-northamerica",
+  "center": [
+    -164,
+    52.6
+  ],
+  "radiusKm": 550,
+  "trench": [
+    [
+      -160,
+      54.5
+    ],
+    [
+      -163,
+      53.5
+    ],
+    [
+      -166,
+      52.8
+    ],
+    [
+      -169,
+      52
+    ],
+    [
+      -172,
+      51.3
+    ]
+  ],
+  "strikeAzimuthDeg": 246,
+  "convergence": {
+    "rateMmYr": 65,
+    "azimuthDeg": 330,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -166.5,
+    52
+  ],
+  "context": {
+    "en": "1964 M9.2 Alaska and 1938/1946/1957/1965 Aleutian M8+ ruptures; recent M7.8 Simeonof (2020) and M8.2 Chignik (2021).",
+    "es": "Rupturas de Alaska 1964 (M9.2) y de las Aleutianas 1938/1946/1957/1965 (M8+); recientes M7.8 Simeonof (2020) y M8.2 Chignik (2021)."
+  }
+}

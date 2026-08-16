@@ -1,0 +1,50 @@
+{
+  "id": "kamchatka",
+  "slug": "kamchatka",
+  "name": {
+    "en": "Kamchatka",
+    "es": "Kamchatka"
+  },
+  "platePair": {
+    "en": "Pacific Plate → Okhotsk Plate",
+    "es": "Placa del Pacífico → Placa de Ojotsk"
+  },
+  "margin": "pacific-okhotsk",
+  "center": [
+    160.5,
+    53
+  ],
+  "radiusKm": 450,
+  "trench": [
+    [
+      157,
+      51
+    ],
+    [
+      159.5,
+      52.5
+    ],
+    [
+      162,
+      54
+    ],
+    [
+      165,
+      55.5
+    ]
+  ],
+  "strikeAzimuthDeg": 47,
+  "convergence": {
+    "rateMmYr": 76,
+    "azimuthDeg": 315,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    158,
+    52
+  ],
+  "context": {
+    "en": "1952 M9.0 Kamchatka rupture; July 2025 M8.8 offshore Kamchatka re-ruptured much of the segment.",
+    "es": "Ruptura de Kamchatka de 1952 (M9.0); el evento de julio de 2025 (M8.8) frente a Kamchatka volvió a romper gran parte del segmento."
+  }
+}

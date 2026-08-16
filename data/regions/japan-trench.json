@@ -1,0 +1,50 @@
+{
+  "id": "japan-trench",
+  "slug": "japan-trench",
+  "name": {
+    "en": "Japan Trench",
+    "es": "Fosa de Japón"
+  },
+  "platePair": {
+    "en": "Pacific Plate → Okhotsk Plate",
+    "es": "Placa del Pacífico → Placa de Ojotsk"
+  },
+  "margin": "pacific-eurasia",
+  "center": [
+    143.5,
+    38.5
+  ],
+  "radiusKm": 400,
+  "trench": [
+    [
+      141.5,
+      35.5
+    ],
+    [
+      142.5,
+      37.5
+    ],
+    [
+      143.8,
+      39.5
+    ],
+    [
+      145.5,
+      41.5
+    ]
+  ],
+  "strikeAzimuthDeg": 28,
+  "convergence": {
+    "rateMmYr": 85,
+    "azimuthDeg": 290,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    143,
+    38
+  ],
+  "context": {
+    "en": "2011 Tōhoku M9.1 rupture; earlier Sanriku tsunami earthquakes 1896/1933; deep coupling debate.",
+    "es": "Ruptura de Tōhoku de 2011 (M9.1); terremotos de tsunami de Sanriku de 1896/1933; debate sobre el acoplamiento profundo."
+  }
+}

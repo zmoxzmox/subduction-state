@@ -1,0 +1,46 @@
+{
+  "id": "colombia",
+  "slug": "colombia",
+  "name": {
+    "en": "Colombia",
+    "es": "Colombia"
+  },
+  "platePair": {
+    "en": "Nazca Plate → South American Plate",
+    "es": "Placa de Nazca → Placa Sudamericana"
+  },
+  "margin": "nazca-southamerica",
+  "center": [
+    -77.6,
+    4.3
+  ],
+  "radiusKm": 350,
+  "trench": [
+    [
+      -77,
+      6.5
+    ],
+    [
+      -78,
+      4.5
+    ],
+    [
+      -78.8,
+      2.5
+    ]
+  ],
+  "strikeAzimuthDeg": 204,
+  "convergence": {
+    "rateMmYr": 52,
+    "azimuthDeg": 100,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -79.2,
+    4.4
+  ],
+  "context": {
+    "en": "1979 Tumaco M8.2 rupture; shares the 1906 M8.8 margin-scale event with Ecuador.",
+    "es": "Ruptura de Tumaco de 1979 (M8.2); comparte con Ecuador el evento de margen completo de 1906 (M8.8)."
+  }
+}

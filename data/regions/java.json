@@ -1,0 +1,50 @@
+{
+  "id": "java",
+  "slug": "java",
+  "name": {
+    "en": "Java",
+    "es": "Java"
+  },
+  "platePair": {
+    "en": "Australian Plate → Sunda Plate",
+    "es": "Placa Australiana → Placa de Sonda"
+  },
+  "margin": "australia-sunda",
+  "center": [
+    110.8,
+    -9.6
+  ],
+  "radiusKm": 450,
+  "trench": [
+    [
+      105,
+      -7
+    ],
+    [
+      108,
+      -9
+    ],
+    [
+      111,
+      -10.5
+    ],
+    [
+      114,
+      -11.5
+    ]
+  ],
+  "strikeAzimuthDeg": 117,
+  "convergence": {
+    "rateMmYr": 67,
+    "azimuthDeg": 15,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    110.5,
+    -10.5
+  ],
+  "context": {
+    "en": "1994 M7.8 and 2006 M7.7 tsunami earthquakes; documented episodic slow-slip west of Java.",
+    "es": "Terremotos de tsunami de 1994 (M7.8) y 2006 (M7.7); deslizamiento lento episódico documentado al oeste de Java."
+  }
+}

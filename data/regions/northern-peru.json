@@ -1,0 +1,46 @@
+{
+  "id": "northern-peru",
+  "slug": "northern-peru",
+  "name": {
+    "en": "Northern Peru",
+    "es": "Perú norte"
+  },
+  "platePair": {
+    "en": "Nazca Plate → South American Plate",
+    "es": "Placa de Nazca → Placa Sudamericana"
+  },
+  "margin": "nazca-southamerica",
+  "center": [
+    -80,
+    -5.8
+  ],
+  "radiusKm": 350,
+  "trench": [
+    [
+      -79.5,
+      -3.5
+    ],
+    [
+      -80.2,
+      -5.5
+    ],
+    [
+      -81,
+      -7.5
+    ]
+  ],
+  "strikeAzimuthDeg": 201,
+  "convergence": {
+    "rateMmYr": 61,
+    "azimuthDeg": 83,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -81.8,
+    -6
+  ],
+  "context": {
+    "en": "Includes the 1970 M7.9 Chimbote rupture zone; flat-slab subduction begins north of ~9°S.",
+    "es": "Incluye la zona de ruptura de Chimbote de 1970 (M7.9); al norte de ~9°S comienza la subducción de losa plana."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "central-chile",
+  "slug": "central-chile",
+  "name": {
+    "en": "Central Chile",
+    "es": "Chile central"
+  },
+  "platePair": {
+    "en": "Nazca Plate → South American Plate",
+    "es": "Placa de Nazca → Placa Sudamericana"
+  },
+  "margin": "nazca-southamerica",
+  "center": [
+    -72.6,
+    -33.3
+  ],
+  "radiusKm": 400,
+  "trench": [
+    [
+      -72.2,
+      -30
+    ],
+    [
+      -73,
+      -33.5
+    ],
+    [
+      -73.6,
+      -37
+    ]
+  ],
+  "strikeAzimuthDeg": 190,
+  "convergence": {
+    "rateMmYr": 68,
+    "azimuthDeg": 77,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -74.3,
+    -33.5
+  ],
+  "context": {
+    "en": "2010 Maule M8.8 rupture zone; earlier segment events 1906, 1985 (Valparaíso M8.0).",
+    "es": "Zona de ruptura de Maule de 2010 (M8.8); eventos previos del segmento en 1906 y 1985 (Valparaíso M8.0)."
+  }
+}

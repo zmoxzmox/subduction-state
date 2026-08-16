@@ -1,0 +1,50 @@
+{
+  "id": "hikurangi",
+  "slug": "hikurangi",
+  "name": {
+    "en": "Hikurangi / New Zealand",
+    "es": "Hikurangi / Nueva Zelanda"
+  },
+  "platePair": {
+    "en": "Pacific Plate → Australian Plate",
+    "es": "Placa del Pacífico → Placa Australiana"
+  },
+  "margin": "australia-pacific",
+  "center": [
+    177.8,
+    -38.9
+  ],
+  "radiusKm": 400,
+  "trench": [
+    [
+      176,
+      -36.5
+    ],
+    [
+      177,
+      -38.5
+    ],
+    [
+      178.5,
+      -40.5
+    ],
+    [
+      180,
+      -42
+    ]
+  ],
+  "strikeAzimuthDeg": 150,
+  "convergence": {
+    "rateMmYr": 50,
+    "azimuthDeg": 260,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    178,
+    -39.5
+  ],
+  "context": {
+    "en": "1931 Hawke's Bay M7.8; world's best-documented shallow slow-slip cycle (recurring every ~2 years).",
+    "es": "Hawke's Bay 1931 (M7.8); el ciclo de deslizamiento lento somero mejor documentado del mundo (recurrente cada ~2 años)."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "sunda-sumatra",
+  "slug": "sunda-sumatra",
+  "name": {
+    "en": "Sunda / Sumatra",
+    "es": "Sonda / Sumatra"
+  },
+  "platePair": {
+    "en": "Australian Plate → Sunda Plate",
+    "es": "Placa Australiana → Placa de Sonda"
+  },
+  "margin": "australia-sunda",
+  "center": [
+    97,
+    -0.2
+  ],
+  "radiusKm": 450,
+  "trench": [
+    [
+      92,
+      4
+    ],
+    [
+      95,
+      1.5
+    ],
+    [
+      98,
+      -1
+    ],
+    [
+      101,
+      -3.5
+    ]
+  ],
+  "strikeAzimuthDeg": 130,
+  "convergence": {
+    "rateMmYr": 61,
+    "azimuthDeg": 20,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    95.5,
+    -2
+  ],
+  "context": {
+    "en": "2004 Aceh M9.1 and 2005 Nias M8.6 ruptures; strongly oblique convergence with forearc partitioning.",
+    "es": "Rupturas de Aceh 2004 (M9.1) y Nias 2005 (M8.6); convergencia fuertemente oblícua con partición del antearco."
+  }
+}

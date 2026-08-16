@@ -1,0 +1,50 @@
+{
+  "id": "cascadia",
+  "slug": "cascadia",
+  "name": {
+    "en": "Cascadia",
+    "es": "Cascadia"
+  },
+  "platePair": {
+    "en": "Juan de Fuca Plate → North American Plate",
+    "es": "Placa de Juan de Fuca → Placa Norteamericana"
+  },
+  "margin": "juandefuca-northamerica",
+  "center": [
+    -125.3,
+    45.3
+  ],
+  "radiusKm": 400,
+  "trench": [
+    [
+      -125.7,
+      42
+    ],
+    [
+      -125.6,
+      44
+    ],
+    [
+      -125.6,
+      46
+    ],
+    [
+      -125.2,
+      48.5
+    ]
+  ],
+  "strikeAzimuthDeg": 3,
+  "convergence": {
+    "rateMmYr": 36,
+    "azimuthDeg": 65,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -126.8,
+    45.5
+  ],
+  "context": {
+    "en": "Full-margin rupture 26 Jan 1700 (M~9.0, dated by orphan-tsunami and tree-ring records); geodetically locked, exceptionally quiet instrumentally.",
+    "es": "Ruptura de todo el margen el 26 de enero de 1700 (M~9.0, fechada por registros de tsunami huérfano y anillos de árboles); acoplado geodésicamente y excepcionalmente silencioso instrumentalmente."
+  }
+}

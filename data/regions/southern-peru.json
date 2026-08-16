@@ -1,0 +1,46 @@
+{
+  "id": "southern-peru",
+  "slug": "southern-peru",
+  "name": {
+    "en": "Southern Peru",
+    "es": "Perú sur"
+  },
+  "platePair": {
+    "en": "Nazca Plate → South American Plate",
+    "es": "Placa de Nazca → Placa Sudamericana"
+  },
+  "margin": "nazca-southamerica",
+  "center": [
+    -73.2,
+    -17.3
+  ],
+  "radiusKm": 350,
+  "trench": [
+    [
+      -73,
+      -15.5
+    ],
+    [
+      -73.8,
+      -17.5
+    ],
+    [
+      -74.2,
+      -19.5
+    ]
+  ],
+  "strikeAzimuthDeg": 196,
+  "convergence": {
+    "rateMmYr": 66,
+    "azimuthDeg": 76,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -74.6,
+    -18
+  ],
+  "context": {
+    "en": "2001 M8.4 Arequipa/Moquegua rupture; 1868 Arica M8.5+ at the southern boundary.",
+    "es": "Ruptura de Arequipa/Moquegua de 2001 (M8.4); evento de Arica de 1868 (M8.5+) en el límite sur."
+  }
+}

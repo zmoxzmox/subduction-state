@@ -1,0 +1,50 @@
+{
+  "id": "middle-america",
+  "slug": "middle-america",
+  "name": {
+    "en": "Middle America Trench",
+    "es": "Fosa de Mesoamérica"
+  },
+  "platePair": {
+    "en": "Cocos Plate → Caribbean/North American Plate",
+    "es": "Placa de Cocos → Placa del Caribe/Norteamérica"
+  },
+  "margin": "cocos-caribbean",
+  "center": [
+    -94.3,
+    13.3
+  ],
+  "radiusKm": 400,
+  "trench": [
+    [
+      -95,
+      17
+    ],
+    [
+      -95.5,
+      14.5
+    ],
+    [
+      -94.5,
+      12
+    ],
+    [
+      -92.5,
+      10
+    ]
+  ],
+  "strikeAzimuthDeg": 161,
+  "convergence": {
+    "rateMmYr": 75,
+    "azimuthDeg": 30,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -95.8,
+    13
+  ],
+  "context": {
+    "en": "1985 Michoacán M8.0 (Mexico City); 1992 Nicaragua tsunami earthquake; short recurrence, well-instrumented.",
+    "es": "Michoacán 1985 (M8.0, Ciudad de México); terremoto de tsunami de Nicaragua 1992; recurrencia corta y bien instrumentado."
+  }
+}

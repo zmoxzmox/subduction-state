@@ -1,0 +1,46 @@
+{
+  "id": "northern-chile",
+  "slug": "northern-chile",
+  "name": {
+    "en": "Northern Chile",
+    "es": "Chile norte"
+  },
+  "platePair": {
+    "en": "Nazca Plate → South American Plate",
+    "es": "Placa de Nazca → Placa Sudamericana"
+  },
+  "margin": "nazca-southamerica",
+  "center": [
+    -70.6,
+    -21.3
+  ],
+  "radiusKm": 400,
+  "trench": [
+    [
+      -70.6,
+      -19
+    ],
+    [
+      -71.2,
+      -21.5
+    ],
+    [
+      -71.6,
+      -24
+    ]
+  ],
+  "strikeAzimuthDeg": 190,
+  "convergence": {
+    "rateMmYr": 65,
+    "azimuthDeg": 80,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -72.3,
+    -21.6
+  ],
+  "context": {
+    "en": "Historic gap segment (1877 M8.8); partial ruptures 1995 Antofagasta M8.0 and 2014 Iquique M8.2.",
+    "es": "Segmento de brecha histórica (1877, M8.8); rupturas parciales en 1995 Antofagasta (M8.0) y 2014 Iquique (M8.2)."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "ecuador",
+  "slug": "ecuador",
+  "name": {
+    "en": "Ecuador",
+    "es": "Ecuador"
+  },
+  "platePair": {
+    "en": "Nazca Plate → South American Plate",
+    "es": "Placa de Nazca → Placa Sudamericana"
+  },
+  "margin": "nazca-southamerica",
+  "center": [
+    -81.2,
+    -0.6
+  ],
+  "radiusKm": 350,
+  "trench": [
+    [
+      -80.5,
+      1
+    ],
+    [
+      -81.3,
+      -1
+    ],
+    [
+      -82.2,
+      -3
+    ]
+  ],
+  "strikeAzimuthDeg": 203,
+  "convergence": {
+    "rateMmYr": 58,
+    "azimuthDeg": 85,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    -83,
+    -0.8
+  ],
+  "context": {
+    "en": "1906 M8.8 Ecuador–Colombia rupture; 2016 Pedernales M7.8 re-ruptured part of the segment.",
+    "es": "Ruptura Ecuador–Colombia de 1906 (M8.8); el evento de Pedernales de 2016 (M7.8) rompió parte del segmento de nuevo."
+  }
+}

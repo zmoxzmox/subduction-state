@@ -1,0 +1,50 @@
+{
+  "id": "nankai",
+  "slug": "nankai",
+  "name": {
+    "en": "Nankai",
+    "es": "Nankai"
+  },
+  "platePair": {
+    "en": "Philippine Sea Plate → Amur/Eurasian Plate",
+    "es": "Placa del Mar de Filipinas → Placa de Amur/Eurasia"
+  },
+  "margin": "philippine-eurasia",
+  "center": [
+    135.8,
+    33.6
+  ],
+  "radiusKm": 350,
+  "trench": [
+    [
+      132,
+      31
+    ],
+    [
+      134,
+      32.5
+    ],
+    [
+      136,
+      33.8
+    ],
+    [
+      138.5,
+      34.5
+    ]
+  ],
+  "strikeAzimuthDeg": 58,
+  "convergence": {
+    "rateMmYr": 63,
+    "azimuthDeg": 315,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    134.5,
+    32.5
+  ],
+  "context": {
+    "en": "Repeat M8+ ruptures (684, 1361, 1707, 1854, 1944 Tonankai, 1946 Nankai); well-documented slow-slip and tremor.",
+    "es": "Rupturas M8+ repetidas (684, 1361, 1707, 1854, 1944 Tōnankai, 1946 Nankai); deslizamiento lento y temblor bien documentados."
+  }
+}

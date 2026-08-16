@@ -1,0 +1,50 @@
+{
+  "id": "philippines",
+  "slug": "philippines",
+  "name": {
+    "en": "Philippines",
+    "es": "Filipinas"
+  },
+  "platePair": {
+    "en": "Philippine Sea Plate → Sunda/Philippine Mobile Belt",
+    "es": "Placa del Mar de Filipinas → Cinturón Móvil de Filipinas/Sunda"
+  },
+  "margin": "sunda-philippine",
+  "center": [
+    124.3,
+    10.8
+  ],
+  "radiusKm": 400,
+  "trench": [
+    [
+      120,
+      6
+    ],
+    [
+      123,
+      9.5
+    ],
+    [
+      126,
+      13
+    ],
+    [
+      128.5,
+      16.5
+    ]
+  ],
+  "strikeAzimuthDeg": 39,
+  "convergence": {
+    "rateMmYr": 80,
+    "azimuthDeg": 300,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    123,
+    10.5
+  ],
+  "context": {
+    "en": "1976 Moro Gulf M8.0 tsunami earthquake; highly complex block boundaries — segmentation poorly resolved.",
+    "es": "Terremoto de tsunami del Golfo de Moro de 1976 (M8.0); límites de bloques muy complejos — la segmentación está mal resuelta."
+  }
+}

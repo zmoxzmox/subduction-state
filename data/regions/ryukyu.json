@@ -1,0 +1,50 @@
+{
+  "id": "ryukyu",
+  "slug": "ryukyu",
+  "name": {
+    "en": "Ryukyu",
+    "es": "Ryukyu"
+  },
+  "platePair": {
+    "en": "Philippine Sea Plate → Eurasian Plate",
+    "es": "Placa del Mar de Filipinas → Placa de Eurasia"
+  },
+  "margin": "philippine-eurasia",
+  "center": [
+    128.3,
+    26.8
+  ],
+  "radiusKm": 400,
+  "trench": [
+    [
+      122,
+      22
+    ],
+    [
+      126,
+      25
+    ],
+    [
+      129,
+      27.5
+    ],
+    [
+      132,
+      29.5
+    ]
+  ],
+  "strikeAzimuthDeg": 50,
+  "convergence": {
+    "rateMmYr": 70,
+    "azimuthDeg": 320,
+    "source": "MORVEL (DeMets et al., 2010), approximate segment-average"
+  },
+  "envSamplePoint": [
+    127.5,
+    26
+  ],
+  "context": {
+    "en": "1911 Kikaijima M8.0; very low instrumental seismicity with documented slow-slip — a weakly coupled end-member.",
+    "es": "Kikaijima 1911 (M8.0); sismicidad instrumental muy baja con deslizamiento lento documentado — un caso extremo de bajo acoplamiento."
+  }
+}
