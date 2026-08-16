@@ -45,7 +45,9 @@ export interface SstSample {
 
 export async function getSstSample(
   profile: RegionProfile,
+  opts: { history?: boolean } = {},
 ): Promise<SstSample | null> {
+  const includeHistory = opts.history ?? true;
   const [lon, lat] = profile.envSamplePoint;
   const base = "https://coastwatch.noaa.gov/erddap/griddap/noaacrwsstanomalyDaily.csv?sea_surface_temperature_anomaly";
 
@@ -75,20 +77,22 @@ export async function getSstSample(
     .toISOString()
     .slice(0, 10);
   let history: Array<{ t: string; v: number }> = [];
-  try {
-    const res = await cachedFetch(
-      enc(`${base}[(${start}):(${today()})][(${lat.toFixed(1)})][(${lon.toFixed(1)})]`),
-      parseCsvSeries,
-      {
-        key: `sst-history-${profile.slug}`,
-        ttlMs: 7 * 24 * 3_600_000,
-        source: "NOAA SST anomaly (CRW/ERDDAP)",
-        timeoutMs: 30_000,
-      },
-    );
-    history = res.data;
-  } catch {
-    history = [];
+  if (includeHistory) {
+    try {
+      const res = await cachedFetch(
+        enc(`${base}[(${start}):(${today()})][(${lat.toFixed(1)})][(${lon.toFixed(1)})]`),
+        parseCsvSeries,
+        {
+          key: `sst-history-${profile.slug}`,
+          ttlMs: 7 * 24 * 3_600_000,
+          source: "NOAA SST anomaly (CRW/ERDDAP)",
+          timeoutMs: 30_000,
+        },
+      );
+      history = res.data;
+    } catch {
+      history = [];
+    }
   }
 
   if (recent.length === 0) return null;

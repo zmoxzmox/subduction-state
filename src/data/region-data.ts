@@ -16,7 +16,7 @@ import { getRegionProfiles } from "@/regions/profiles";
 export interface RegionDataBundle extends RegionDynamicData {
   /** how each sub-source reached us */
   modes: {
-    catalog: "live" | "cached" | "fixture" | "failed";
+    catalog: "live" | "cached" | "fixture" | "unknown" | "failed";
     volcanoes: string;
     env: "live" | "cached" | "fixture" | "missing";
     enso: "live" | "cached" | "fixture" | "missing";
@@ -27,7 +27,7 @@ export interface RegionDataBundle extends RegionDynamicData {
 export async function getRegionDynamicData(
   profile: RegionProfile,
   config: ResearchConfig = CANONICAL_CONFIG,
-  opts: { includeGnss?: boolean; includeEnv?: boolean } = {},
+  opts: { includeGnss?: boolean; includeEnv?: boolean; envHistory?: boolean } = {},
 ): Promise<RegionDataBundle> {
   const includeGnss = opts.includeGnss ?? true;
   const includeEnv = opts.includeEnv ?? true;
@@ -53,7 +53,7 @@ export async function getRegionDynamicData(
   let envMode: RegionDataBundle["modes"]["env"] = "missing";
   if (includeEnv) {
     const [sst, ssh] = await Promise.all([
-      getSstSample(profile).catch(() => null),
+      getSstSample(profile, { history: opts.envHistory ?? true }).catch(() => null),
       getSshSample(profile).catch(() => null),
     ]);
     if (sst || ssh) {

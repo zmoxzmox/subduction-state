@@ -221,7 +221,7 @@ export interface RegionProfile {
 
 export type HealthStatus = "healthy" | "stale" | "failed" | "unknown";
 /** How a payload reached the client */
-export type PayloadMode = "live" | "cached" | "fixture";
+export type PayloadMode = "live" | "cached" | "fixture" | "unknown";
 
 export interface DataHealth {
   source: string;

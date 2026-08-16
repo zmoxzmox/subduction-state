@@ -51,10 +51,17 @@ export interface RegionScoreResult {
 }
 
 function evidence(
-  partial: Omit<EvidenceItem, "id" | "confidence"> & { id?: string },
-  confidence: number,
+  item: Omit<EvidenceItem, "id" | "confidence"> & {
+    id?: string;
+    confidence?: number;
+  },
+  confidence?: number,
 ): EvidenceItem {
-  return { id: partial.id ?? `${partial.metricId}-ev`, confidence, ...partial };
+  return {
+    ...item,
+    id: item.id ?? `${item.metricId}-ev`,
+    confidence: confidence ?? item.confidence ?? 0.5,
+  };
 }
 
 function curatedMetric(
@@ -420,10 +427,10 @@ export function computeRegionMetrics(
     confidence: env.confidence,
     details: env.score != null
       ? {
-          sstAnomalyC: data.envSample?.sstAnomalyC,
-          sstPercentile: data.envSample?.sstPercentile,
-          sshAnomalyCm: data.envSample?.sshAnomalyCm,
-          ensoOni: data.enso?.oni,
+          sstAnomalyC: data.envSample?.sstAnomalyC ?? null,
+          sstPercentile: data.envSample?.sstPercentile ?? null,
+          sshAnomalyCm: data.envSample?.sshAnomalyCm ?? null,
+          ensoOni: data.enso?.oni ?? null,
           subweights: "sst 0.5 / ssh 0.3 / enso 0.2 (renormalised over available)",
         }
       : undefined,
@@ -435,7 +442,7 @@ export function computeRegionMetrics(
               metricId: "environmentalPerturbation",
               regionId: profile.slug,
               label: "Local SST anomaly (NOAA Coral Reef Watch)",
-              value: data.envSample?.sstAnomalyC,
+              value: data.envSample?.sstAnomalyC ?? null,
               unit: "°C",
               status: "experimental",
               sourceName: "NOAA CoastWatch / Coral Reef Watch SST anomaly",
@@ -452,7 +459,7 @@ export function computeRegionMetrics(
               metricId: "environmentalPerturbation",
               regionId: profile.slug,
               label: "ENSO state (ONI, global context)",
-              value: data.enso?.oni,
+              value: data.enso?.oni ?? null,
               unit: "°C",
               status: "experimental",
               sourceName: "NOAA Climate Prediction Center — Oceanic Niño Index",
