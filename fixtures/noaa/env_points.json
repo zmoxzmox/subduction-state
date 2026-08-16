@@ -1,0 +1,154 @@
+{
+  "alaska-aleutians": {
+    "lon": -166.5,
+    "lat": 52,
+    "sstAnomalyC": 0.84,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.027,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "cascadia": {
+    "lon": -126.8,
+    "lat": 45.5,
+    "sstAnomalyC": 0.25,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.066,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "central-chile": {
+    "lon": -74.3,
+    "lat": -33.5,
+    "sstAnomalyC": 0.32,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.065,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "central-peru-lima": {
+    "lon": -78.6,
+    "lat": -12.6,
+    "sstAnomalyC": 5.08,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.14,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "colombia": {
+    "lon": -79.2,
+    "lat": 4.4,
+    "sstAnomalyC": 1.99,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.233,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "ecuador": {
+    "lon": -83,
+    "lat": -0.8,
+    "sstAnomalyC": 4.52,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.219,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "hikurangi": {
+    "lon": 178,
+    "lat": -39.5,
+    "sstAnomalyC": -0.32,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.229,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "japan-trench": {
+    "lon": 143,
+    "lat": 38,
+    "sstAnomalyC": 0.16,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.05,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "java": {
+    "lon": 110.5,
+    "lat": -10.5,
+    "sstAnomalyC": 0.1,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.007,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "kamchatka": {
+    "lon": 158,
+    "lat": 52
+  },
+  "middle-america": {
+    "lon": -95.8,
+    "lat": 13,
+    "sstAnomalyC": 1.7,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.217,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "nankai": {
+    "lon": 134.5,
+    "lat": 32.5,
+    "sstAnomalyC": 0.29,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.224,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "northern-chile": {
+    "lon": -72.3,
+    "lat": -21.6,
+    "sstAnomalyC": 1.2,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.098,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "northern-peru": {
+    "lon": -81.8,
+    "lat": -6,
+    "sstAnomalyC": 4.34,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.131,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "papua-new-guinea": {
+    "lon": 148.5,
+    "lat": -6.6,
+    "sstAnomalyC": 0.23,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.119,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "philippines": {
+    "lon": 123,
+    "lat": 10.5
+  },
+  "ryukyu": {
+    "lon": 127.5,
+    "lat": 26,
+    "sstAnomalyC": -0.17,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.13,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "southern-peru": {
+    "lon": -74.6,
+    "lat": -18,
+    "sstAnomalyC": 1.65,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.094,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "sunda-sumatra": {
+    "lon": 95.5,
+    "lat": -2,
+    "sstAnomalyC": 0.97,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": 0.075,
+    "sshDate": "2026-08-14T00:00:00Z"
+  },
+  "tonga-kermadec": {
+    "lon": -175,
+    "lat": -21,
+    "sstAnomalyC": -0.53,
+    "sstDate": "2026-08-14T12:00:00Z",
+    "sshAnomalyM": -0.007,
+    "sshDate": "2026-08-14T00:00:00Z"
+  }
+}
