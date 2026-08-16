@@ -5,7 +5,7 @@
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url": "https://tiles.openfreemap.org/planet.json"
+      "url": "https://tiles.openfreemap.org/planet"
     }
   },
   "layers": [
@@ -85,7 +85,7 @@
       "filter": ["==", ["get", "class"], "country"],
       "layout": {
         "text-field": "{name}",
-        "text-font": ["Noto Sans Medium"],
+        "text-font": ["Noto Sans Bold"],
         "text-size": ["interpolate", ["linear"], ["zoom"], 2, 10, 6, 14],
         "text-letter-spacing": 0.08,
         "text-transform": "uppercase"
@@ -106,8 +106,7 @@
       "layout": {
         "text-field": "{name}",
         "text-font": ["Noto Sans Regular"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 5, 10, 10, 13],
-        "text-priority": ["get", "rank"]
+        "text-size": ["interpolate", ["linear"], ["zoom"], 5, 10, 10, 13]
       },
       "paint": {
         "text-color": "#5a6169",

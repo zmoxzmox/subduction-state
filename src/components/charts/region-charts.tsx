@@ -130,7 +130,7 @@ export function RateChart({
   }));
   return (
     <ResponsiveContainer width="100%" height={176}>
-      <ComposedChart margin={{ top: 8, right: 8, bottom: 4, left: -22 }}>
+      <ComposedChart data={data} margin={{ top: 8, right: 8, bottom: 4, left: -22 }}>
         <CartesianGrid stroke={grid} strokeWidth={1} />
         <XAxis
           dataKey="t"

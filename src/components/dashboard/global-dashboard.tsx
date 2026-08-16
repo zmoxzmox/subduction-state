@@ -112,7 +112,7 @@ export function LargestQuakesPanel({
   events7d: QuakeEvent[];
   events30d: QuakeEvent[];
 }) {
-  const { t, formatTime, lang } = useI18n();
+  const { t, formatTime } = useI18n();
   const [tab, setTab] = React.useState<"7d" | "30d">("7d");
   const events = tab === "7d" ? events7d : events30d;
   return (

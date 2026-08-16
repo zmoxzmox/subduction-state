@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   getFeaturedRegion,
-  getRegionProfile,
   getRegionProfiles,
   getRegionsByMargin,
 } from "@/regions/profiles";

@@ -35,8 +35,15 @@ export function Header() {
   ];
 
   const cycleTheme = () => {
+    // light → dark → system → (opposite of the resolved system theme)
     const next =
-      theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
+      theme === "light"
+        ? "dark"
+        : theme === "dark"
+          ? "system"
+          : resolvedTheme === "dark"
+            ? "light"
+            : "dark";
     setTheme(next);
   };
 

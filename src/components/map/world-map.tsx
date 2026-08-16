@@ -182,7 +182,9 @@ export function WorldMap(props: MapProps) {
     <div className="relative h-full w-full">
       <div
         ref={containerRef}
-        className="absolute inset-0"
+        // inline positioning: maplibre's own CSS sets position:relative on
+        // .maplibregl-map and would otherwise out-cascade the utilities
+        style={{ position: "absolute", inset: 0 }}
         role="application"
         aria-label={t("map.title")}
       />
@@ -328,7 +330,7 @@ function syncAllLayers(
       minzoom: 3,
       layout: {
         "text-field": ["get", "name"],
-        "text-font": ["Noto Sans Medium"],
+        "text-font": ["Noto Sans Bold"],
         "text-size": 10.5,
         "text-letter-spacing": 0.04,
       },
@@ -342,19 +344,31 @@ function syncAllLayers(
   );
 
   /* ---- plate boundaries ---- */
+  // USGS convergent labeling is incomplete along some trenches (e.g.
+  // Peru–Chile), so the curated segment trench axes are merged in as
+  // convergent geometry — they are the primary analysis corridors.
+  const boundaryFeatures: object[] =
+    props.boundaries?.flatMap((b) =>
+      b.lines
+        .filter((line) => line.length >= 2)
+        .map((line) => ({
+          type: "Feature" as const,
+          properties: { kind: b.kind },
+          geometry: { type: "LineString" as const, coordinates: line },
+        })),
+    ) ?? [];
+  const trenchFeatures: object[] = props.regions.map((r) => ({
+    type: "Feature" as const,
+    properties: { kind: "convergent" },
+    geometry: { type: "LineString" as const, coordinates: r.trench },
+  }));
+  const platesData = {
+    type: "FeatureCollection",
+    features: [...boundaryFeatures, ...trenchFeatures],
+  } as GeoJSON.FeatureCollection;
   ensureSource(map, "plates", {
     type: "geojson",
-    data: {
-      type: "FeatureCollection",
-      features:
-        props.boundaries?.flatMap((b) =>
-          b.lines.map((line) => ({
-            type: "Feature",
-            properties: { kind: b.kind },
-            geometry: { type: "LineString", coordinates: line },
-          })),
-        ) ?? [],
-    },
+    data: platesData,
   });
   ensureLayer(
     map,
@@ -466,7 +480,7 @@ function syncAllLayers(
       filter: ["has", "point_count"],
       layout: {
         "text-field": ["get", "point_count_abbreviated"],
-        "text-font": ["Noto Sans Medium"],
+        "text-font": ["Noto Sans Bold"],
         "text-size": 10,
       },
       paint: {
