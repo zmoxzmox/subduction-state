@@ -10,7 +10,6 @@ import type {
   ScoredMetric,
   Volcano,
 } from "@/types";
-import { distanceKm } from "@/lib/utils";
 import { distanceToPolygon, distanceToPolyline, pointInCircle } from "@/lib/geo";
 import { CANONICAL_WEIGHTS } from "./weights";
 import type { ResearchConfig } from "./config";

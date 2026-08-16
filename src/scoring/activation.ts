@@ -38,7 +38,6 @@ export function poissonCdf(k: number, lambda: number): number {
   if (k < 0) return 0;
   const a = k + 1;
   const EPS = 3e-12;
-  const FPMIN = 1e-300;
   const ap = a;
   let sum = 1 / a;
   let del = sum;

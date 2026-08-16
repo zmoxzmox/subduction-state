@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { DataHealth, PayloadMode } from "@/types";
+import type { PayloadMode } from "@/types";
 import { healthRegistry } from "./health";
 
 /**

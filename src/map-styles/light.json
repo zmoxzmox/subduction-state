@@ -1,0 +1,137 @@
+{
+  "version": 8,
+  "name": "subduction-state-light",
+  "glyphs": "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": "https://tiles.openfreemap.org/planet.json"
+    }
+  },
+  "layers": [
+    { "id": "background", "type": "background", "paint": { "background-color": "#eef0ec" } },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "filter": ["!", ["has", "brunnel"]],
+      "paint": { "fill-color": "#d7dfe7", "fill-outline-color": "#ccd6e0" }
+    },
+    {
+      "id": "waterway",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "waterway",
+      "paint": { "line-color": "#ccd6e0", "line-width": 0.7 }
+    },
+    {
+      "id": "landcover-ice",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "landcover",
+      "filter": ["==", ["get", "class"], "ice"],
+      "paint": { "fill-color": "#e6ebe8", "fill-opacity": 0.6 }
+    },
+    {
+      "id": "boundary-country",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "boundary",
+      "filter": ["==", ["get", "admin_level"], 2],
+      "paint": { "line-color": "#c2c5ba", "line-width": 0.7, "line-dasharray": [3, 2] }
+    },
+    {
+      "id": "boundary-state",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "boundary",
+      "filter": ["==", ["get", "admin_level"], 4],
+      "paint": { "line-color": "#d3d6cb", "line-width": 0.5 }
+    },
+    {
+      "id": "road-major",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 7,
+      "filter": ["<=", ["get", "class"], "motorway"],
+      "paint": { "line-color": "#dcded4", "line-width": 0.6 }
+    },
+    {
+      "id": "label-marine",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "water_name",
+      "minzoom": 1.5,
+      "layout": {
+        "text-field": "{name}",
+        "text-font": ["Noto Sans Italic"],
+        "text-size": 11,
+        "text-letter-spacing": 0.2,
+        "text-transform": "uppercase"
+      },
+      "paint": {
+        "text-color": "#93a1ae",
+        "text-halo-color": "#eef0ec",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "label-country",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "filter": ["==", ["get", "class"], "country"],
+      "layout": {
+        "text-field": "{name}",
+        "text-font": ["Noto Sans Medium"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 2, 10, 6, 14],
+        "text-letter-spacing": 0.08,
+        "text-transform": "uppercase"
+      },
+      "paint": {
+        "text-color": "#68707a",
+        "text-halo-color": "#eef0ec",
+        "text-halo-width": 1.4
+      }
+    },
+    {
+      "id": "label-city",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "minzoom": 5,
+      "filter": ["<=", ["get", "rank"], 8],
+      "layout": {
+        "text-field": "{name}",
+        "text-font": ["Noto Sans Regular"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 5, 10, 10, 13],
+        "text-priority": ["get", "rank"]
+      },
+      "paint": {
+        "text-color": "#5a6169",
+        "text-halo-color": "#eef0ec",
+        "text-halo-width": 1.2
+      }
+    },
+    {
+      "id": "label-town",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "minzoom": 9,
+      "filter": [">", ["get", "rank"], 8],
+      "layout": {
+        "text-field": "{name}",
+        "text-font": ["Noto Sans Regular"],
+        "text-size": 11
+      },
+      "paint": {
+        "text-color": "#767e86",
+        "text-halo-color": "#eef0ec",
+        "text-halo-width": 1.2
+      }
+    }
+  ]
+}

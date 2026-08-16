@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";
-import type { MetricId, RegionProfile } from "@/types";
+import type { RegionProfile } from "@/types";
 import { circleRing } from "@/lib/geo";
 
 /**

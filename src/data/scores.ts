@@ -1,17 +1,16 @@
 import type {
+  ChangeFeedItem,
   EnsoState,
   EnvSample,
   GnssStation,
   MetricId,
-  QuakeEvent,
   RegionProfile,
   ScoreSummary,
   ScoredMetric,
   Volcano,
-  ChangeFeedItem,
 } from "@/types";
 import { getRegionProfiles } from "@/regions/profiles";
-import { CANONICAL_CONFIG, type ResearchConfig } from "@/scoring/config";
+import { CANONICAL_CONFIG } from "@/scoring/config";
 import { computeRegionMetrics, type RegionDynamicData } from "@/scoring/region-scorer";
 import { aggregateScoredMetrics, dominantMetric } from "@/scoring/score";
 import { buildSummaryClauses, type SummaryClause } from "@/scoring/summary";

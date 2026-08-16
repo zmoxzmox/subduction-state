@@ -25,10 +25,14 @@ const I18nContext = createContext<I18nContextValue | null>(null);
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
-  // restore persisted preference after hydration (no SSR mismatch)
+  // restore persisted preference after hydration (no SSR mismatch).
+  // One-time initialization effect — the only render it triggers is
+  // this provider's own subtree, so the cascading-render concern does
+  // not apply.
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(LANG_STORAGE_KEY);
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time restore
       if (stored === "en" || stored === "es") setLangState(stored);
     } catch {
       // localStorage unavailable

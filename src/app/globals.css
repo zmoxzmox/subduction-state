@@ -1,26 +1,150 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — validated palette (dataviz skill instance)          */
+/* Categorical 8-slot order, sequential blue (score) / orange          */
+/* (coverage/depth), fixed status scale, ink & hairline chrome.        */
+/* ------------------------------------------------------------------ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --page: #f4f4f1;
+  --surface: #fbfbfa;
+  --surface-2: #ffffff;
+  --surface-3: #f0f0ec;
+  --ink: #16181d;
+  --ink-2: #4c5157;
+  --ink-3: #7d8388;
+  --line: #e4e4dd;
+  --line-2: #c9c9c0;
+  --accent: #2a78d6;
+  --accent-strong: #1c5cab;
+  --accent-soft: #cde2fb;
+
+  /* categorical slots (light) */
+  --viz-1: #2a78d6; /* blue */
+  --viz-2: #eb6834; /* orange */
+  --viz-3: #1baf7a; /* aqua */
+  --viz-4: #eda100; /* yellow */
+  --viz-5: #e87ba4; /* magenta */
+  --viz-6: #008300; /* green */
+  --viz-7: #4a3aa7; /* violet */
+  --viz-8: #e34948; /* red */
+
+  /* status (fixed, never themed) */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+
+  --grid: #e1e0d9;
+  --focus: #2a78d6;
+
+  --shadow-card: 0 1px 2px rgb(22 24 29 / 0.05), 0 4px 16px rgb(22 24 29 / 0.04);
+  color-scheme: light;
+}
+
+.dark {
+  --page: #0c0f13;
+  --surface: #12161b;
+  --surface-2: #171c22;
+  --surface-3: #1d232a;
+  --ink: #e8eaee;
+  --ink-2: #a9b0b7;
+  --ink-3: #7b838c;
+  --line: #232930;
+  --line-2: #333b44;
+  --accent: #3987e5;
+  --accent-strong: #86b6ef;
+  --accent-soft: #10315c;
+
+  /* categorical slots (dark steps) */
+  --viz-1: #3987e5;
+  --viz-2: #d95926;
+  --viz-3: #199e70;
+  --viz-4: #c98500;
+  --viz-5: #d55181;
+  --viz-6: #008300;
+  --viz-7: #9085e9;
+  --viz-8: #e66767;
+
+  --grid: #232930;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.35);
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-good: var(--status-good);
+  --color-warning: var(--status-warning);
+  --color-serious: var(--status-serious);
+  --color-critical: var(--status-critical);
+
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --shadow-card: var(--shadow-card);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--page);
+  color: var(--ink);
+  font-feature-settings: "cv05", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* numeric alignment in dense data columns */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* focus visibility everywhere */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* thin scrollbars for panels */
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+
+/* hatch pattern for low-coverage regime states (map + charts) */
+.hatch-low-coverage {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5px,
+    color-mix(in srgb, var(--ink) 14%, transparent) 5px,
+    color-mix(in srgb, var(--ink) 14%, transparent) 6px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

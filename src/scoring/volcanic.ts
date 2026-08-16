@@ -47,7 +47,7 @@ export function computeVolcanicResponse(
 
   // One new eruption → moderate response signal; saturation at 3.
   const base = Math.min(newEruptions.length, 3) / 3; // 0, 0.33, 0.67, 1
-  let score = base * 60;
+  const score = base * 60;
 
   // Confidence is intrinsically low: eruption-onset dates in GVP are
   // back-filled and "new" often cannot be resolved from the source.

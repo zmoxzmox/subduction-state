@@ -1,8 +1,11 @@
 import { z } from "zod";
-import { cachedFetch } from "@/data/http";
+import fsSync from "node:fs";
+import path from "node:path";
+import { cachedFetch, getMemoryCache } from "@/data/http";
 import type { GnssStation, RegionProfile } from "@/types";
 import { distanceKm } from "@/lib/utils";
 import {
+  MIN_USABLE_STATIONS,
   RECENT_WINDOW_DAYS,
   aggregateGnss,
   computeStationAnomaly,
@@ -135,6 +138,7 @@ const MAX_STATIONS = 5;
 
 export async function getRegionGnss(
   profile: RegionProfile,
+  opts: { cachedOnly?: boolean } = {},
 ): Promise<RegionGnss> {
   healthRegistry.ensure("GNSS (UNR NGL)");
   try {
@@ -146,7 +150,18 @@ export async function getRegionGnss(
       }))
       .filter((s) => s.d <= profile.radiusKm)
       .sort((a, b) => a.d - b.d)
-      .slice(0, MAX_STATIONS);
+      .slice(0, opts.cachedOnly ? MAX_STATIONS : MAX_STATIONS);
+
+    // cachedOnly: skip the region entirely unless station series are
+    // already on disk (progressive warmup makes GNSS appear over time)
+    if (opts.cachedOnly) {
+      const cached = nearby.filter((s) => hasStationSeriesCached(s.id));
+      if (cached.length < MIN_USABLE_STATIONS + 1) {
+        return unavailableResult("not-cached-yet");
+      }
+      nearby.length = 0;
+      nearby.push(...cached);
+    }
 
     if (nearby.length === 0) {
       return {
@@ -213,15 +228,35 @@ export async function getRegionGnss(
         : undefined,
     };
   } catch (e) {
-    return {
-      stations: [],
-      aggregate: {
-        score: null, medianZ: null, topQuartileZ: null,
-        stationCount: 0, anomalies: [], insufficientStations: true,
-      },
-      unavailable: true,
-      message: e instanceof Error ? e.message : "unavailable",
-    };
+    return unavailableResult(e instanceof Error ? e.message : "unavailable");
+  }
+}
+
+function unavailableResult(message?: string): RegionGnss {
+  return {
+    stations: [],
+    aggregate: {
+      score: null, medianZ: null, topQuartileZ: null,
+      stationCount: 0, anomalies: [], insufficientStations: true,
+    },
+    unavailable: true,
+    message,
+  };
+}
+
+/** Does a parsed station series already exist in memory/disk cache? */
+export function hasStationSeriesCached(station: string): boolean {
+  const mem = getMemoryCache<Tenv3Sample[]>(`unr-tenv3-${station}`);
+  if (mem) return true;
+  try {
+    const p = path.join(
+      process.cwd(),
+      ".cache/upstream",
+      `unr-tenv3-${station}.json`,
+    );
+    return fsSync.existsSync(p);
+  } catch {
+    return false;
   }
 }
 

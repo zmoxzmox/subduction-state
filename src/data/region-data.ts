@@ -83,14 +83,7 @@ export async function getRegionDynamicData(
 
   const gnss = includeGnss
     ? await getRegionGnss(profile)
-    : {
-        stations: [] as never[],
-        aggregate: {
-          score: null, medianZ: null, topQuartileZ: null,
-          stationCount: 0, anomalies: [], insufficientStations: true,
-        },
-        unavailable: true,
-      };
+    : await getRegionGnss(profile, { cachedOnly: true });
 
   const marginTrenches = getRegionProfiles()
     .filter((r) => r.margin === profile.margin)
