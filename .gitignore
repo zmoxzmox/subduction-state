@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.env*.local
+*.tsbuildinfo
+.next-types/
+playwright-report/
+test-results/
+.cache/
