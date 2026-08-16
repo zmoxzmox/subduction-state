@@ -34,15 +34,13 @@ export default function ComparePage() {
 
   const regions = React.useMemo(() => data?.regions ?? [], [data]);
 
-  // default selection (derived, not stored): featured + two highest
+  // default selection (derived, not stored): three highest-coverage matches
   const defaultSelection = React.useMemo(() => {
-    const featured = regions.find((r) => r.featured)?.slug;
-    const others = regions
-      .filter((r) => r.summary.observed != null && r.slug !== featured)
+    return regions
+      .filter((r) => r.summary.observed != null && r.summary.coverage >= 0.5)
       .sort((a, b) => (b.summary.observed ?? 0) - (a.summary.observed ?? 0))
-      .slice(0, 2)
+      .slice(0, 3)
       .map((r) => r.slug);
-    return [featured, ...others].filter(Boolean).slice(0, 3) as string[];
   }, [regions]);
 
   const active = selected.length > 0 ? selected : defaultSelection;

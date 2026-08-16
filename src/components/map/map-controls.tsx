@@ -175,7 +175,7 @@ function MapLegend() {
           <ul className="space-y-0.5 text-[10px] text-ink-3">
             <li>— {t("map.legend.convergent")}</li>
             <li>· {t("map.legend.otherBoundaries")}</li>
-            <li>▲ {t("map.legend.volcanoStates")}</li>
+            <li>● {t("map.legend.volcanoStates")}</li>
           </ul>
         </div>
       </div>

@@ -40,9 +40,9 @@ export function HighestMatchesPanel({
 
   return (
     <Card>
-      <CardHeader>
-        <div>
-          <CardTitle>{t("home.highestMatches")}</CardTitle>
+      <CardHeader className="items-start">
+        <div className="min-w-0">
+          <CardTitle className="leading-snug">{t("home.highestMatches")}</CardTitle>
           <CardDescription className="mt-0.5">{t("home.highestMatchesNote")}</CardDescription>
         </div>
       </CardHeader>
@@ -50,16 +50,12 @@ export function HighestMatchesPanel({
         {rows.length === 0 ? (
           <p className="px-4 py-6 text-xs text-ink-3">{t("home.noRegions")}</p>
         ) : (
-          <table className="w-full text-xs">
+          <table className="w-full table-fixed text-xs">
             <thead>
               <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider text-ink-3">
-                <th className="px-4 py-1.5 font-medium">{t("home.columns.region")}</th>
-                <th className="px-2 py-1.5 text-right font-medium">{t("home.columns.score")}</th>
-                <th className="px-2 py-1.5 text-right font-medium">{t("home.columns.range")}</th>
-                <th className="hidden px-2 py-1.5 text-right font-medium sm:table-cell">
-                  {t("home.columns.dominant")}
-                </th>
-                <th className="px-4 py-1.5 text-right font-medium">{t("home.columns.m5")}</th>
+                <th className="w-full px-4 py-1.5 font-medium">{t("home.columns.region")}</th>
+                <th className="w-24 px-1 py-1.5 text-right font-medium">{t("home.columns.score")}</th>
+                <th className="w-14 px-4 py-1.5 text-right font-medium">{t("home.columns.m5")}</th>
               </tr>
             </thead>
             <tbody>
@@ -71,28 +67,26 @@ export function HighestMatchesPanel({
                   <td className="px-4 py-2">
                     <Link
                       href={`/region/${region.slug}`}
-                      className="font-medium text-ink hover:text-accent"
+                      className="block truncate font-medium text-ink hover:text-accent"
                       aria-label={t("home.viewRegion", { region: region.name[lang] })}
                     >
                       {region.name[lang]}
-                      {region.featured && (
-                        <span className="ml-1.5 align-middle text-[9px] font-semibold uppercase tracking-wide text-accent">
-                          ★
-                        </span>
-                      )}
                     </Link>
+                    <span className="block truncate text-[10px] leading-tight text-ink-3">
+                      {region.dominantMetricId
+                        ? t(`metrics.${region.dominantMetricId}.name`)
+                        : "—"}
+                      <span className="tnum">
+                        {" · "}
+                        {formatNumber(summary.minFull, { maximumFractionDigits: 0 })}–
+                        {formatNumber(summary.maxFull, { maximumFractionDigits: 0 })}
+                      </span>
+                    </span>
                   </td>
-                  <td className="px-2 py-2 text-right">
+                  <td className="px-1 py-2 text-right align-top">
                     <ScoreChip summary={summary} showBand={false} />
                   </td>
-                  <td className="px-2 py-2 text-right text-ink-3 tnum">
-                    {formatNumber(summary.minFull, { maximumFractionDigits: 0 })}–
-                    {formatNumber(summary.maxFull, { maximumFractionDigits: 0 })}
-                  </td>
-                  <td className="hidden px-2 py-2 text-right text-ink-3 sm:table-cell">
-                    {region.dominantMetricId ? t(`metrics.${region.dominantMetricId}.name`) : "—"}
-                  </td>
-                  <td className="px-4 py-2 text-right text-ink-3 tnum">
+                  <td className="px-4 py-2 text-right align-top text-ink-3 tnum">
                     {region.m5Count30d ?? "—"}
                   </td>
                 </tr>

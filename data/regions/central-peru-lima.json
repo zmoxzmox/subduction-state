@@ -47,7 +47,6 @@
     -78.6,
     -12.6
   ],
-  "featured": true,
   "context": {
     "en": "Reference implementation region. Geodesy indicates a large, highly locked patch offshore central Peru (Villegas-Lanza et al. 2016). The central Lima segment last ruptured at great scale in 1746; adjacent segments produced M8.0-8.2 events in 1942, 1974 and 2007 (Pisco). Structural variables below are computed from this public rupture history, published coupling and the convergence rate - cited per value.",
     "es": "Región de implementación de referencia. La geodesia indica un extenso parche fuertemente acoplado frente al Perú central (Villegas-Lanza et al. 2016). El segmento central de Lima rupturó a gran escala por última vez en 1746; segmentos adyacentes produjeron eventos M8.0–8.2 en 1942, 1974 y 2007 (Pisco). Las variables estructurales se calculan a partir de este historial público de rupturas, el acoplamiento publicado y la tasa de convergencia — con fuentes por valor."

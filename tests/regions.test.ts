@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  getFeaturedRegion,
   getRegionProfiles,
   getRegionsByMargin,
 } from "@/regions/profiles";
@@ -10,12 +9,13 @@ describe("region profiles", () => {
     expect(getRegionProfiles().length).toBe(20);
   });
 
-  it("ships Central Peru / Lima as the featured reference profile", () => {
-    const lima = getFeaturedRegion();
-    expect(lima.slug).toBe("central-peru-lima");
+  it("ships Central Peru / Lima as the reference profile (no featured star)", () => {
+    const lima = getRegionProfiles().find((r) => r.slug === "central-peru-lima")!;
     expect(lima.couplingPolygon?.length).toBeGreaterThanOrEqual(4);
     expect(lima.couplingPrior?.value).toBe(0.9);
     expect(lima.couplingPrior?.confidence).toBeGreaterThan(0.5);
+    // no region is flagged featured — regions are peers, not highlighted
+    expect(getRegionProfiles().some((r) => r.featured)).toBe(false);
   });
 
   it("every region carries a sourced coupling prior (research-based, cited)", () => {

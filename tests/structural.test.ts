@@ -5,7 +5,7 @@ import {
   deficitToScore,
   deriveStructural,
 } from "@/scoring/structural";
-import { getRegionProfiles, getFeaturedRegion } from "@/regions/profiles";
+import { getRegionProfiles } from "@/regions/profiles";
 import { computeRegionMetrics } from "@/scoring/region-scorer";
 import { CANONICAL_CONFIG } from "@/scoring/config";
 import type { RegionDynamicData } from "@/scoring/region-scorer";
@@ -175,8 +175,9 @@ describe("structural metrics end-to-end for every profile", () => {
   });
 
   it("Lima keeps a strong structural loading profile under the derived model", () => {
+    const lima = getRegionProfiles().find((r) => r.slug === "central-peru-lima")!;
     const { metrics } = computeRegionMetrics(
-      getFeaturedRegion(),
+      lima,
       emptyData,
       CANONICAL_CONFIG,
       NOW,

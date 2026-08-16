@@ -120,8 +120,3 @@ export function getRegionsByMargin(margin: string): RegionProfile[] {
   return getRegionProfiles().filter((r) => r.margin === margin);
 }
 
-export function getFeaturedRegion(): RegionProfile {
-  const featured = getRegionProfiles().find((r) => r.featured);
-  if (!featured) throw new Error("No featured region configured");
-  return featured;
-}

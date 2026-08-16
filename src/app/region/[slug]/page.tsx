@@ -320,9 +320,9 @@ export default function RegionPage() {
             <p className="mb-1 text-[11px] text-ink-3">
               {t("region.charts.magnitudeDesc")}
             </p>
+            <MagnitudeChart timeline={d.charts.timeline} />
             {d.charts.bValueCurrent.displayable ? (
               <>
-                <MagnitudeChart timeline={d.charts.timeline} />
                 <div className="mt-2 grid grid-cols-4 gap-2 text-[11px] text-ink-2">
                   <span className="tnum">
                     {t("region.charts.bValue")}:{" "}
@@ -345,7 +345,7 @@ export default function RegionPage() {
                 </div>
               </>
             ) : (
-              <p className="py-8 text-center text-[11px] text-ink-3">
+              <p className="mt-2 text-[11px] text-ink-3">
                 {t("region.charts.notEnoughForB")}
               </p>
             )}

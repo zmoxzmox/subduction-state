@@ -138,7 +138,9 @@ test("11. home ranking matches the region page score", async ({ page }) => {
   await expect(table.getByRole("row").nth(1)).toBeVisible({ timeout: 120_000 });
   const firstRow = table.getByRole("row").nth(1);
   const regionHref = await firstRow.getByRole("link").first().getAttribute("href");
-  const homeScore = (await firstRow.locator("span.tnum").first().textContent())?.trim();
+  const homeScore = (
+    await firstRow.locator("span.font-semibold.text-ink.tnum").first().textContent()
+  )?.trim();
   expect(regionHref).toMatch(/^\/region\//);
   expect(homeScore).toMatch(/^\d+$/);
 

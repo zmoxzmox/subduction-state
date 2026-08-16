@@ -14,7 +14,7 @@ export interface BValueResult {
   displayable: boolean;
 }
 
-export const MIN_EVENTS_FOR_B = 50;
+export const MIN_EVENTS_FOR_B = 30;
 
 /** Maximum-likelihood b-value (Aki 1965) with Shi–Bolt uncertainty. */
 export function computeBValue(mags: number[]): BValueResult {
