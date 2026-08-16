@@ -1,0 +1,529 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "loadingData": "Fetching live data…",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "unknown": "Unknown",
+    "unavailable": "Unavailable",
+    "notEstimated": "Not estimated",
+    "reset": "Reset",
+    "export": "Export",
+    "import": "Import",
+    "copy": "Copy",
+    "copied": "Copied",
+    "close": "Close",
+    "open": "Open",
+    "details": "Details",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "asOf": "As of",
+    "seeMethodology": "See methodology",
+    "viewDocumentation": "View documentation",
+    "liveData": "Live data",
+    "cachedData": "Cached data",
+    "fixtureData": "Cached demo snapshot",
+    "staleData": "Stale cache",
+    "updated": "Updated",
+    "fetched": "Fetched",
+    "observed": "Observed",
+    "source": "Source",
+    "confidence": "Confidence",
+    "weight": "Weight",
+    "value": "Value",
+    "days": "days",
+    "km": "km",
+    "perDay": "/day",
+    "notAvailableShort": "n/a"
+  },
+  "nav": {
+    "map": "Map",
+    "compare": "Compare",
+    "methodology": "Methodology",
+    "data": "Data",
+    "research": "Research",
+    "language": "Language",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "skipToContent": "Skip to content"
+  },
+  "app": {
+    "name": "Subduction State",
+    "tagline": "Global observatory of loaded-but-quiet subduction regimes",
+    "disclaimer": "Experimental geophysical research interface. Regime scores are not earthquake predictions or official hazard warnings. Follow local geological and civil-defense authorities for emergency information.",
+    "methodologyVersion": "Methodology V0.1",
+    "featuredBadge": "Featured research region",
+    "curatedProfileBadge": "Curated research profile"
+  },
+  "score": {
+    "regimeMatch": "Regime Match",
+    "regimeMatchLong": "Loaded–Quiet Megathrust Regime Score",
+    "notProbability": "Observed-data similarity, not earthquake probability.",
+    "coverage": "Data coverage",
+    "fullRange": "Possible full-score interval",
+    "neutralImputed": "Neutral-imputed research value",
+    "observedLabel": "Observed regime match",
+    "earthquakeProbability": "Earthquake probability",
+    "dataKnown": "{pct}% of weighted variables known",
+    "insufficientData": "Insufficient data to score",
+    "band": {
+      "weak": "Weak match",
+      "limited": "Limited match",
+      "moderate": "Moderate match",
+      "substantial": "Substantial match",
+      "strong": "Strong match"
+    },
+    "coverageBand": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "partial": "Partial",
+      "sparse": "Sparse",
+      "insufficient": "Insufficient"
+    }
+  },
+  "badges": {
+    "live": "Live",
+    "derived": "Derived",
+    "curated": "Curated",
+    "experimental": "Experimental",
+    "missing": "Missing",
+    "stale": "Stale"
+  },
+  "metrics": {
+    "couplingAsperity": {
+      "name": "Megathrust coupling",
+      "fullName": "Megathrust coupling / asperity geometry",
+      "description": "Geodetic locking of the plate interface and the coherence of strongly coupled patches."
+    },
+    "slipDeficitMaturity": {
+      "name": "Slip deficit",
+      "fullName": "Accumulated slip deficit / cycle maturity",
+      "description": "How far the segment has progressed through its seismic cycle — a cycle-maturity feature, never 'percent toward failure'."
+    },
+    "longTermQuiescence": {
+      "name": "Long-term gap",
+      "fullName": "Long-term seismic gap / persistent quiescence",
+      "description": "Long-duration absence of segment-scale great ruptures over a highly coupled zone."
+    },
+    "recentQuiescence": {
+      "name": "Recent quiescence",
+      "fullName": "Recent local seismic quiescence",
+      "description": "Recent M4+ activity suppressed relative to this region's own historical baseline."
+    },
+    "interfaceActivation": {
+      "name": "Interface activation",
+      "fullName": "Local interface / edge activation",
+      "description": "Activity around asperity edges and segment boundaries while the locked interior stays quiet."
+    },
+    "gnssTransient": {
+      "name": "GNSS transient",
+      "fullName": "Current GNSS / strain transient",
+      "description": "Recent deviation of processed GNSS positions from each station's own trend and scatter."
+    },
+    "environmentalPerturbation": {
+      "name": "Environment",
+      "fullName": "Ocean / climate / hydrological perturbation",
+      "description": "Local SST and sea-level anomalies plus ENSO context — deliberately low weight, unvalidated causal value."
+    },
+    "remotePerturbation": {
+      "name": "Remote events",
+      "fullName": "Remote dynamic / same-margin perturbation",
+      "description": "Experimental proxy for recent large earthquakes nearby. Not Coulomb stress transfer."
+    },
+    "volcanicResponse": {
+      "name": "Volcanic response",
+      "fullName": "Volcanic multidomain response",
+      "description": "Newly started eruptions within 500 km. Pre-existing activity contributes nothing."
+    },
+    "alongMarginMigration": {
+      "name": "Migration",
+      "fullName": "Along-margin migration",
+      "description": "Whether independent earthquakes progress consistently along the margin over time."
+    }
+  },
+  "evidence": {
+    "title": "Evidence",
+    "openDrawer": "Open evidence for {metric}",
+    "rawValue": "Raw value",
+    "transformation": "Transformation",
+    "formula": "Formula",
+    "sources": "Sources",
+    "freshness": "Freshness",
+    "caveats": "Caveats",
+    "effectOnScore": "Effect on final score",
+    "contribution": "Contribution",
+    "contributionValue": "{points} of {weight} weighted points",
+    "unknownNoContribution": "Unknown — contributes nothing and lowers coverage",
+    "curatedNote": "This is a curated research prior from published literature — not a live measurement.",
+    "missingNote": "Unknown ≠ normal. A missing variable is excluded from the score and lowers data coverage; it is never treated as zero."
+  },
+  "home": {
+    "title": "Global subduction observatory",
+    "subtitle": "Which subduction segments currently resemble a loaded-but-quiet regime?",
+    "highestMatches": "Highest current regime matches",
+    "highestMatchesNote": "Regions with at least partial data coverage. Similarity to a regime — not a danger ranking.",
+    "columns": {
+      "region": "Region",
+      "score": "Observed",
+      "coverage": "Coverage",
+      "range": "Range",
+      "dominant": "Dominant signal",
+      "m5": "30d M5+"
+    },
+    "largest7d": "Largest earthquakes — last 7 days",
+    "largest30d": "Largest earthquakes — last 30 days",
+    "quiescenceLeaders": "Regions with strongest recent quiescence",
+    "activationLeaders": "Regions with strongest recent activation",
+    "lowestCoverage": "Regions with lowest data coverage",
+    "envAnomalies": "Current major environmental anomalies",
+    "noRegions": "No regions score above the minimum coverage filter.",
+    "pendingRegions": "{count} region(s) still computing — data appears as it arrives.",
+    "viewRegion": "View {region} analysis",
+    "rankingFilters": {
+      "title": "Filters",
+      "minCoverage": "Minimum coverage",
+      "any": "Any"
+    }
+  },
+  "map": {
+    "title": "World map",
+    "layers": "Layers",
+    "filters": "Filters",
+    "timeWindow": "Time window",
+    "magnitude": "Minimum magnitude",
+    "depth": "Depth",
+    "depthAny": "All depths",
+    "depthShallow": "Shallow < 50 km",
+    "depthIntermediate": "Intermediate 50–150 km",
+    "depthDeep": "Deep > 150 km",
+    "window": { "24h": "24 h", "7d": "7 d", "30d": "30 d", "90d": "90 d" },
+    "layer": {
+      "earthquakes": "Earthquakes (USGS)",
+      "plates": "Tectonic boundaries (USGS)",
+      "faults": "Active faults (GEM)",
+      "volcanoes": "Volcanoes (Smithsonian GVP)",
+      "gnss": "GNSS stations (UNR NGL)",
+      "regime": "Regime layer"
+    },
+    "legend": {
+      "title": "Legend",
+      "magScale": "Magnitude",
+      "depthScale": "Depth",
+      "regimeScale": "Regime match",
+      "coverageHatch": "Hatched = low data coverage / no score",
+      "cluster": "Clustered at low zoom",
+      "aftershock": "Ringed = aftershock candidate (ETAS-lite)",
+      "volcanoStates": "Volcano: location · historical · recent eruption",
+      "convergent": "Convergent boundary",
+      "otherBoundaries": "Divergent / transform"
+    },
+    "popover": {
+      "magnitude": "Magnitude",
+      "time": "Time",
+      "depth": "Depth",
+      "coordinates": "Coordinates",
+      "place": "Place",
+      "distanceToRegion": "Distance to {region}",
+      "usgsLink": "USGS event page",
+      "aftershockYes": "Likely local aftershock (heuristic)",
+      "aftershockNo": "Independent (heuristic declustering)",
+      "nearestRegion": "Nearest subduction region",
+      "volcanoType": "Type",
+      "volcanoLastEruption": "Last known eruption",
+      "volcanoDisclaimer": "A listed volcano location or historical eruption is not evidence of current unrest.",
+      "stationZ": "Horizontal robust-Z (60 d)",
+      "stationSpan": "Series length",
+      "viewStation": "View station series",
+      "regionScore": "Observed score",
+      "regionCoverage": "Coverage",
+      "openRegion": "Open region analysis"
+    },
+    "noEvents": "No earthquakes match the current filters.",
+    "depthNote": "Depth color: shallow → deep",
+    "fixturesActive": "Cached demo snapshot — upstream unavailable",
+    "regimeNoScore": "No score (insufficient data)"
+  },
+  "region": {
+    "subductionMargin": "Convergent subduction margin",
+    "convergence": "Convergence",
+    "strike": "Along-strike azimuth",
+    "curatedProfile": "Curated research profile — structural priors from published studies, not live measurements.",
+    "scoreCard": {
+      "summaryTitle": "Current state",
+      "exportSnapshot": "Copy analysis snapshot",
+      "snapshotCopied": "Snapshot copied to clipboard as JSON.",
+      "replayTitle": "Historical replay (partial)",
+      "replayNote": "Recomputes seismic-derived metrics as of the chosen date. GNSS, environmental and volcano history are not replayed — they are shown as unknown rather than fabricated.",
+      "replayDate": "View state as of"
+    },
+    "breakdown": {
+      "title": "Score breakdown",
+      "subtitle": "Each component with its weight, status and evidence",
+      "weightOf": "Weight {weight}%",
+      "updatedOn": "Updated {date}",
+      "unknown": "Unknown",
+      "scoreOf": "{score} / 100"
+    },
+    "charts": {
+      "timeline": "Seismicity timeline",
+      "timelineDesc": "Magnitude vs time, M4+. Rings mark aftershock candidates.",
+      "rate": "Event rate (rolling)",
+      "rateDesc": "Independent events per day vs historical baseline.",
+      "rate7": "7-day",
+      "rate30": "30-day",
+      "baseline": "Historical baseline",
+      "depth": "Depth distribution",
+      "depthDesc": "Event count by depth bin, last 12 months (declustered).",
+      "magnitude": "Magnitude distribution",
+      "magnitudeDesc": "Gutenberg–Richter with maximum-likelihood b-value.",
+      "bValue": "b-value",
+      "bBaseline": "5-year baseline",
+      "completeness": "Completeness Mc",
+      "events": "events",
+      "notEnoughForB": "Sample size inadequate for a b-value estimate — not shown.",
+      "alongMargin": "Along-margin timeline",
+      "alongMarginDesc": "Along-strike position vs time, M4.5+ independent events (1 y).",
+      "alongStrikeKm": "Along-strike distance (km)",
+      "gnss": "GNSS residual series",
+      "gnssDesc": "Detrended east/north residuals (mm). Robust-Z compares the recent window to each station's own scatter.",
+      "gnssUnavailable": "GNSS transient data are unavailable for this region. The metric stays unknown — it is not set to zero.",
+      "environment": "Environmental conditions",
+      "sst": "SST anomaly",
+      "ssh": "Sea-level anomaly",
+      "enso": "ENSO (ONI, global context)",
+      "ensoNote": "Global climate context only — never used as a local earthquake predictor.",
+      "moment": "Seismic moment release",
+      "depthStats": "Depth behavior",
+      "medianDepth": "Median depth (30 d)",
+      "shallowFraction": "Shallow fraction (< 50 km)",
+      "depthTrend": "Depth trend",
+      "trendDeepening": "Deepening",
+      "trendShallowing": "Shallowing",
+      "trendStable": "Stable",
+      "rawDeclustered": "Raw catalog",
+      "declustered": "Declustered catalog"
+    },
+    "volcanoes": {
+      "title": "Nearby volcanoes (≤ 500 km)",
+      "name": "Volcano",
+      "country": "Country",
+      "type": "Type",
+      "lastEruption": "Last known eruption",
+      "distance": "Distance",
+      "state": "State",
+      "stateLocation": "Location only",
+      "stateHistorical": "Historical",
+      "stateRecent": "Recent eruption",
+      "disclaimer": "Locations and eruption history from the Smithsonian GVP. No volcano is labelled 'unrest' unless the source supports it."
+    },
+    "timeline": {
+      "title": "What changed?",
+      "noChanges": "No material score changes in the last 30 days.",
+      "scoreChange": "{delta} score",
+      "seismicHistoryNote": "Entries recompute seismic-derived metrics over shifting windows; environmental and geodetic history are not replayed."
+    },
+    "gnss": {
+      "title": "GNSS stations",
+      "station": "Station",
+      "robustZ": "Robust-Z",
+      "usable": "Usable stations",
+      "requiresThree": "Requires ≥ 3 usable stations — currently {count}.",
+      "unknownReason": "Metric unknown: no reliable processed time series could be fetched automatically."
+    }
+  },
+  "change": {
+    "couplingAsperity": "Megathrust coupling prior",
+    "slipDeficitMaturity": "Slip-deficit prior",
+    "longTermQuiescence": "Long-term gap prior",
+    "recentQuiescence": "Recent seismic quiescence",
+    "interfaceActivation": "Interface/edge activation",
+    "gnssTransient": "GNSS transient",
+    "environmentalPerturbation": "Environmental perturbation",
+    "remotePerturbation": "Remote-event perturbation",
+    "volcanicResponse": "Volcanic response",
+    "alongMarginMigration": "Along-margin migration",
+    "gnssNoUpdate": "No GNSS update — last usable data {lastUsable}"
+  },
+  "summary": {
+    "regimeLoadedQuiet": "This region currently resembles a strongly loaded, relatively quiet configuration. Recent local activation remains limited.",
+    "structuralLoadingDominates": "Strong structural loading and persistent long-term seismic quiet dominate the current score.",
+    "structuralLoadingModerate": "Structural loading contributes moderately to the current score.",
+    "structuralLoadingLow": "Structural loading is currently low or poorly constrained.",
+    "noStructuralData": "No curated structural priors exist for this region — the score reflects dynamic data only.",
+    "quietWithLimitedActivation": "Recent seismicity is suppressed relative to this region's own baseline, with limited edge activation.",
+    "edgeActivationElevated": "Activity around the interface corridor is elevated relative to this region's own baseline.",
+    "recentSeismicityNearBackground": "Recent seismicity is near this region's own historical background rate.",
+    "gnssIncomplete": "Current geodetic transient data are incomplete, materially limiting interpretation.",
+    "gnssElevated": "Recent GNSS residuals are elevated relative to station scatter.",
+    "environmentAnomalous": "Environmental boundary conditions are unusually anomalous, but their earthquake-forecasting relevance is uncalibrated.",
+    "environmentElevated": "Environmental boundary conditions are mildly anomalous; their forecasting relevance is uncalibrated.",
+    "remotePerturbationElevated": "A recent large remote earthquake increased the experimental remote-perturbation proxy. This does not establish stress transfer or triggering.",
+    "migrationSignal": "Independent earthquakes show a consistent along-margin progression (experimental signal)."
+  },
+  "compare": {
+    "title": "Compare subduction regions",
+    "subtitle": "2–4 regions, side by side. A higher score means a stronger regime match — not that an earthquake will happen first.",
+    "select": "Select regions",
+    "selected": "Selected ({count}/4)",
+    "add": "Add region",
+    "remove": "Remove {region}",
+    "table": {
+      "score": "Observed score",
+      "coverage": "Coverage",
+      "range": "Full range",
+      "structural": "Structural load",
+      "quiescence": "Recent quiescence",
+      "activation": "Activation",
+      "gnss": "GNSS",
+      "environment": "Environment",
+      "volcanic": "Volcanic",
+      "migration": "Migration",
+      "m5": "30d M5+"
+    },
+    "chartTitle": "Component scores",
+    "structuralLoad": "Structural loading (curated + dynamic)",
+    "note": "Comparisons are constrained by uneven data completeness — always read coverage alongside score."
+  },
+  "methodology": {
+    "title": "Methodology & scientific limitations",
+    "intro": "Subduction State measures how strongly the currently observed conditions of a subduction segment resemble a hypothesised regime: high structural loading, accumulated deformation, relative seismic quiet, and possible external perturbation. It is a similarity metric over observable data. It is not, and cannot be, an earthquake forecast.",
+    "what": {
+      "title": "What the score measures",
+      "body": "The Loaded–Quiet Megathrust Regime Score aggregates ten weighted variables (below). Each variable is scored 0–100 from live, derived, curated or experimental evidence, or is null when unknown. The primary number you see is the observed-data score: known contributions renormalised over the known weight. Alongside it you always see data coverage and the full possible-score interval, because unknown ≠ normal."
+    },
+    "not": {
+      "title": "What it does NOT measure",
+      "items": [
+        "It is not an earthquake probability.",
+        "It is not a rupture probability for any fault.",
+        "It is not 'percent toward failure' — the slip-deficit component is a cycle-maturity feature, not a countdown.",
+        "It is not a calibrated statistical forecast of any kind.",
+        "It is not an official warning, alert or product of any civil-defense or geological agency."
+      ]
+    },
+    "weights": {
+      "title": "Canonical V0.1 weights",
+      "note": "Local geodetic and structural measurements dominate; environmental and remote-event proxies are deliberately low-weight because their causal earthquake-predictive value is unvalidated."
+    },
+    "math": {
+      "title": "Score mathematics",
+      "knownContribution": "knownContribution = Σ(weightᵢ × scoreᵢ / 100)",
+      "observed": "observed = knownContribution / knownWeight × 100",
+      "range": "full interval = [knownContribution, knownContribution + missingWeight]",
+      "neutral": "neutralImputed = knownContribution + missingWeight × 0.5",
+      "coverage": "coverage = knownWeight / 100",
+      "note": "The neutral-imputed value exists for research tooling and backtesting. It is never the primary displayed score."
+    },
+    "missing": {
+      "title": "Why missing data create ranges",
+      "body": "A variable with no trustworthy data contributes nothing and is excluded from the denominator. A region can therefore be honest about what it does not know: 71 observed over 80% coverage means the full score could lie anywhere in a 16-point interval. Missing GNSS never becomes GNSS = 0."
+    },
+    "comparison": {
+      "title": "Why regional comparisons are difficult",
+      "body": "Data completeness varies enormously between subduction margins. A region scoring 85 with 30% coverage should be read as less authoritative than a region scoring 65 with 95% coverage, and the interface enforces this visually. Never compare scores without comparing coverage."
+    },
+    "correlation": {
+      "title": "Why correlation does not imply triggering",
+      "body": "Remote earthquakes, climate anomalies and volcanic activity may coincide with local regimes without any causal relationship. The remote-perturbation variable is a geometric/time-decay proxy — it is explicitly not Coulomb stress transfer. Environmental variables carry ≤ 5% weight precisely because their causal value is unvalidated. Nothing in this interface claims that any anomaly causes earthquakes."
+    },
+    "declustering": {
+      "title": "Declustering (ETAS-lite)",
+      "body": "Quiescence, activation and migration statistics use a transparent aftershock heuristic: events within a magnitude-dependent radius (≈10^(0.5M−1.4) km) and time window (≈10^(0.55M−1.95) d) of a prior M6+ event are flagged as aftershock candidates. This is not a full ETAS model and does not estimate triggering probabilities."
+    },
+    "provenance": {
+      "title": "Reproducibility & provenance",
+      "body": "Every score opens an evidence drawer with the raw value, the transformation, the formula, the source, its freshness and confidence. Curated structural priors cite their publications and review dates. If a number cannot be traced, it does not belong in this interface."
+    },
+    "future": {
+      "title": "Known gaps",
+      "items": [
+        "GNSS coverage depends on public processed time series (UNR NGL); many segments have too few current stations — the metric stays unknown rather than guessed.",
+        "GEM active-fault geometry requires a configured export URL; it is map context, never a hazard model.",
+        "Volcanic 'new activity' relies on GVP eruption-onset years, which are approximate and back-filled.",
+        "Historical replay currently covers seismic-derived metrics only; GNSS/environmental history is not fabricated.",
+        "Along-margin migration is experimental and requires ≥4 independent clusters."
+      ]
+    }
+  },
+  "data": {
+    "title": "Data sources, freshness & API health",
+    "subtitle": "Every adapter records its last fetch and observation. Failures fall back to labeled caches — never to silent fabrication.",
+    "table": {
+      "source": "Source",
+      "status": "Status",
+      "mode": "Mode",
+      "lastFetch": "Last fetch",
+      "latestObservation": "Latest observation",
+      "cache": "Cache policy",
+      "note": "Notes",
+      "message": "Message"
+    },
+    "status": {
+      "healthy": "Healthy",
+      "stale": "Stale",
+      "failed": "Failed",
+      "unknown": "Unknown"
+    },
+    "attributionTitle": "Attribution & licensing",
+    "attribution": [
+      "Earthquake data: U.S. Geological Survey (USGS) ComCat, public domain.",
+      "Plate boundaries: U.S. Geological Survey.",
+      "Volcano data: Smithsonian Institution, Global Volcanism Program (VOTW).",
+      "SST anomaly & sea-level anomaly: NOAA CoastWatch / Coral Reef Watch (ERDDAP).",
+      "ENSO: NOAA Climate Prediction Center (ONI).",
+      "GNSS: Nevada Geodetic Laboratory, University of Nevada, Reno.",
+      "Fault geometry (optional layer): GEM Global Active Faults Database (CC-BY-SA).",
+      "Basemap © OpenStreetMap contributors, tiles by OpenFreeMap."
+    ],
+    "gemNote": "The GEM active-faults layer is disabled until a GAF-DB export is configured via GEM_GAF_URL. Fault geometry would be used as visual context only."
+  },
+  "research": {
+    "title": "Research mode",
+    "subtitle": "Experimental re-weighting of the scoring framework. Changes are local to your browser and always visible.",
+    "customActive": "Custom research configuration",
+    "customActiveNote": "Scores shown across the app use your custom weights. The methodology V0.1 canonical weights remain the reference.",
+    "resetV01": "Reset to V0.1",
+    "weights": "Weights",
+    "weightsTotal": "Total",
+    "weightsMustTotal": "Weights must total exactly 100.",
+    "metrics": "Variables",
+    "disableMetric": "Disable (redistributes nothing — the variable drops from coverage)",
+    "thresholds": "Thresholds",
+    "minMagnitude": "Minimum magnitude (quiescence/activation)",
+    "gnssZ": "GNSS robust-Z anchor",
+    "windows": "Windows",
+    "recentWindow": "Recent window (days)",
+    "baselineWindow": "Historical baseline (days)",
+    "remoteRadius": "Remote-event radius (km)",
+    "declustering": "Declustering (ETAS-lite)",
+    "exportConfig": "Export config JSON",
+    "importConfig": "Import config JSON",
+    "importInvalid": "Invalid configuration — weights must sum to 100 and values must be in range.",
+    "configExported": "Configuration copied to clipboard.",
+    "livePreview": "Live preview",
+    "livePreviewNote": "Recomputed instantly from cached metric scores — dynamic metrics use the server's canonical windows; custom windows mark the display as indicative.",
+    "noteServer": "Custom thresholds/windows affect display aggregation. Server-side metrics are always recomputed canonically for reproducibility."
+  },
+  "directions": {
+    "northward": "northward",
+    "northeastward": "northeastward",
+    "eastward": "eastward",
+    "southeastward": "southeastward",
+    "southward": "southward",
+    "southwestward": "southwestward",
+    "westward": "westward",
+    "northwestward": "northwestward",
+    "none": "none"
+  },
+  "footer": {
+    "notPrediction": "Not an earthquake prediction system.",
+    "builtAs": "Built as an experimental research framework for regime characterization.",
+    "links": "Methodology · Data · Sources"
+  }
+}
