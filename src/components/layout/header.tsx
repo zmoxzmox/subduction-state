@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Globe2, Moon, Sun } from "lucide-react";
+import { Globe2, Menu, Moon, Sun, X } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
 import { useResearchConfig } from "@/research/config-context";
 import { cn } from "@/lib/utils";
 import { Segmented } from "@/components/ui/segmented";
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 /** hydration-safe mounted flag (server snapshot false, client true) */
 function useMounted(): boolean {
@@ -25,6 +25,9 @@ export function Header() {
   const { isCustom } = useResearchConfig();
   const { theme, setTheme, resolvedTheme } = useTheme();
   const mounted = useMounted();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const nav = [
     { href: "/", label: t("nav.map") },
@@ -47,6 +50,26 @@ export function Header() {
     setTheme(next);
   };
 
+  const themeLabel =
+    theme === "light"
+      ? t("nav.themeLight")
+      : theme === "dark"
+        ? t("nav.themeDark")
+        : t("nav.themeSystem");
+
+  // Esc closes the mobile menu and returns focus to its trigger
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/85">
       <a
@@ -58,6 +81,7 @@ export function Header() {
       <div className="mx-auto flex h-12 max-w-[1600px] items-center gap-4 px-4">
         <Link
           href="/"
+          onClick={() => setMenuOpen(false)}
           className="flex shrink-0 items-center gap-2"
           aria-label="Subduction State — home"
         >
@@ -83,7 +107,10 @@ export function Header() {
           </div>
         </Link>
 
-        <nav aria-label="Main" className="thin-scroll ml-2 flex flex-1 items-center gap-1 overflow-x-auto">
+        <nav
+          aria-label="Main"
+          className="thin-scroll ml-2 hidden flex-1 items-center gap-1 overflow-x-auto md:flex"
+        >
           {nav.map((item) => {
             const active =
               item.href === "/"
@@ -118,6 +145,7 @@ export function Header() {
           ariaLabel={t("nav.language")}
           value={lang}
           onChange={setLang}
+          className="hidden md:inline-flex"
           options={[
             { value: "en", label: "EN" },
             { value: "es", label: "ES" },
@@ -127,14 +155,14 @@ export function Header() {
         <button
           onClick={cycleTheme}
           aria-label={`${t("nav.theme")}: ${theme ?? "system"}`}
-          title={`${t("nav.theme")}: ${
+          title={`${
             theme === "light"
               ? t("nav.themeLight")
               : theme === "dark"
                 ? t("nav.themeDark")
                 : t("nav.themeSystem")
           }`}
-          className="rounded-md p-1.5 text-ink-2 hover:bg-surface-3 hover:text-ink"
+          className="hidden rounded-md p-1.5 text-ink-2 hover:bg-surface-3 hover:text-ink md:block"
         >
           {mounted && resolvedTheme === "dark" ? (
             <Moon className="h-4 w-4" aria-hidden />
@@ -145,7 +173,99 @@ export function Header() {
             <Globe2 className="hidden" aria-hidden />
           </span>
         </button>
+
+        <button
+          ref={menuButtonRef}
+          type="button"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          aria-label={t("nav.menu")}
+          className="ml-auto rounded-md p-1.5 text-ink-2 hover:bg-surface-3 hover:text-ink md:hidden"
+        >
+          {menuOpen ? (
+            <X className="h-5 w-5" aria-hidden />
+          ) : (
+            <Menu className="h-5 w-5" aria-hidden />
+          )}
+        </button>
       </div>
+
+      {/* Mobile menu — dropdown below the sticky header, desktop is unaffected */}
+      {menuOpen && (
+        <div id="mobile-menu" className="md:hidden">
+          <div
+            className="fixed inset-0 top-12 z-30 bg-black/30 backdrop-blur-[1px]"
+            onClick={() => setMenuOpen(false)}
+            aria-hidden
+          />
+          <div className="thin-scroll fixed inset-x-0 top-12 z-40 max-h-[calc(100dvh-3rem)] overflow-y-auto border-b border-line bg-surface shadow-xl">
+            {isCustom && (
+              <div className="px-4 pt-3">
+                <span className="rounded border border-[color-mix(in_srgb,var(--viz-5)_40%,transparent)] bg-[color-mix(in_srgb,var(--viz-5)_10%,transparent)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--viz-5)]">
+                  {t("research.customActive")}
+                </span>
+              </div>
+            )}
+            <nav aria-label="Main" className="flex flex-col gap-0.5 p-3">
+              {nav.map((item) => {
+                const active =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    onClick={() => setMenuOpen(false)}
+                    className={cn(
+                      "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                      active
+                        ? "bg-accent-soft/50 text-accent-strong dark:text-accent"
+                        : "text-ink-2 hover:bg-surface-3 hover:text-ink",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="flex items-center justify-between gap-3 border-t border-line px-4 py-3">
+              <span className="text-xs font-medium text-ink-3">
+                {t("nav.language")}
+              </span>
+              <Segmented
+                size="sm"
+                ariaLabel={t("nav.language")}
+                value={lang}
+                onChange={setLang}
+                options={[
+                  { value: "en", label: "EN" },
+                  { value: "es", label: "ES" },
+                ]}
+              />
+            </div>
+            <div className="flex items-center justify-between gap-3 border-t border-line px-4 py-3">
+              <span className="text-xs font-medium text-ink-3">
+                {t("nav.theme")}
+              </span>
+              <button
+                onClick={cycleTheme}
+                aria-label={`${t("nav.theme")}: ${theme ?? "system"}`}
+                className="inline-flex items-center gap-2 rounded-md border border-line bg-surface-3 px-3 py-1.5 text-xs font-medium text-ink-2 transition-colors hover:text-ink"
+              >
+                {mounted && resolvedTheme === "dark" ? (
+                  <Moon className="h-4 w-4" aria-hidden />
+                ) : (
+                  <Sun className="h-4 w-4" aria-hidden />
+                )}
+                {themeLabel}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

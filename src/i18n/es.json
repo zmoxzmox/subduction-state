@@ -51,7 +51,8 @@
     "themeLight": "Claro",
     "themeDark": "Oscuro",
     "themeSystem": "Sistema",
-    "skipToContent": "Ir al contenido"
+    "skipToContent": "Ir al contenido",
+    "menu": "Menú"
   },
   "app": {
     "name": "Subduction State",
