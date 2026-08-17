@@ -280,6 +280,3 @@ The app needs outbound HTTPS to the public APIs above; the on-disk cache
 *Experimental geophysical research interface. Regime scores are not earthquake
 predictions or official hazard warnings. Follow local geological and civil-defense
 authorities for emergency information.*
-
---
-MIT License
